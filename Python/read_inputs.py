@@ -19,3 +19,5 @@ def read_inputs ( case , path ) :
   MD_time_step = float(ifile.readline().split(' ')[0]) # MD time step (in fs)
   output_frec = int(ifile.readline().split(' ')[0]) # output print frequency
   ifile.close()
+  return ifile, natoms, mass, epsilon, sigma, rcut, box_length, restart,\
+    trajectory, energies, MD_steps, MD_time_step, output_frec

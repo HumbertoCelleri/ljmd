@@ -32,3 +32,7 @@ import numpy as np
 aa = np.ones(3)
 aaa = aa.ctypes.data_as(C.POINTER(C.c_int))
 c = cell_t(3, 4, aaa)
+
+print c.idxlist
+
+#EOF

@@ -4,8 +4,8 @@ import scipy as sp
 import scipy.io as spio
 import time
 
-def read_inputs ( caso , path ) :
-  ifile = open(path+'/'+caso)
+def read_inputs ( case , path ) :
+  ifile = open(path+'/examples/')
   natoms = int(ifile.readline().split(' ')[0])
   mass = float(ifile.readline().split(' ')[0]) # in AMU
   epsilon = float(ifile.readline().split(' ')[0]) # in kcal/mol

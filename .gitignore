@@ -1,2 +1,6 @@
 *.o
 *.x
+*.so
+*.pyc
+*.dat
+*.xyz

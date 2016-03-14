@@ -1,3 +1,5 @@
+**The default branch is DEV**
+
 This package contains simplified MD code with multi-threading
 parallelization for simulating atoms with a Lennard-Jones potential.
 

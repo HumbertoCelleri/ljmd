@@ -2,18 +2,18 @@
 # -*- coding: utf-8 -*-
 
 import ctypes as C
-CLIB = C.CDLL('./libc.so')
+#CLIB = C.CDLL('./libc.so')
 
 
 class cell_t(C.Structure):
-""" Declaro la estructura cell_t definida en el codigo C """
+    """ Declaro la estructura cell_t definida en el codigo C """
 
     _fields_ = [ ('natoms', C.c_int),
                  ('owner', C.c_int),
                  ('idxlist', C.POINTER(C.c_int))]
 
 class mdsys_t(C.Structure):
-""" Declaro la estructura asociada al sistema definida en C """
+    """ Declaro la estructura asociada al sistema definida en C """
 
     _fields_ = [ ('dt', C.c_double),
                  ('mass', C.c_double),
@@ -48,9 +48,9 @@ class mdsys_t(C.Structure):
 
     def evolution(self, pasos = 1):
 
-    """ Metodo evolucion: el sistema evoluciona mediante el algoritmo de verlet
-    la cantidad de pasos especificada. cellfreq se refiere a los pasos en los que 
-    actualiza la lista de vecinos (definido en el codigo C) """
+        """ Metodo evolucion: el sistema evoluciona mediante el algoritmo de verlet
+        la cantidad de pasos especificada. cellfreq se refiere a los pasos en los que 
+        actualiza la lista de vecinos (definido en el codigo C) """
 
         cellfreq = 4
         for i in range(0, pasos):
@@ -61,12 +61,17 @@ class mdsys_t(C.Structure):
                   CLIB.updcells(byref(self))
 
              
-    def input(self, fname):
-    """ Agregar funcion input de datos """
+    def input(self, dict):
+        """ Agregar funcion input de datos """
 
-        pass
-             
-
-
-        
-
+        self.natoms = C.c_int(dict['natoms'])
+        self.dt = C.c_double(dict['dt'])
+        self.mass = C.c_double(dict['mass'])
+        self.epsilon = C.c_double(dict['epsilon'])
+        self.sigma = C.c_double(dict['sigma'])
+        self.box = C.c_double(dict['box'])
+        self.rcut = C.c_double(dict['rcut'])
+        self.pos = (C.c_double*(3*self.natoms))(*dict['pos'])
+        self.vel = (C.c_double*(3*self.natoms))(*dict['vel'])
+        self.frc = (C.c_double*(3*self.nthreads*self.natoms))()
+        self.nsteps = C.c_int(dict['nsteps'])

@@ -40,3 +40,81 @@ Se crea sistema de Manejo de Proyecto, deadlines y aviso segun integrante. (App 
 
 **Estructura de ljmd.c**
 Se genera un archivo de referencia con las estructuras y funciones de ljmd.c
+
+
+#**ESTANDAR COMENTARIOS**
+
+## En C
+1. Comentario archivo (Al principio de archivo .c)
+    ```
+    /** Descripcion  archivo
+    * Need to use
+    *  ::
+    *    <file>(function)(other)
+    *
+    */
+    ```
+
+2. Comentario en clases/funciones (Acordarse de indentar)
+    ```
+    /// Descripcion corta
+
+    /** Descripcion larga
+    *
+    * Parameters
+    * ----------
+    * parametro : caracteristica (virtual, callable,etc)
+    * Que es este parámetro
+    *
+    * Returns
+    * -------
+    * t : callable
+    * The decorated test `t`.
+    *
+    * Examples
+    * --------
+    * Algun ejemplo?
+    * 
+    */
+    ```
+3. Comentarios internos de codigo (indentados)
+    ```
+    /// comentario de codigo
+    ```
+
+
+## En Python
+1. Comentario archivo (Al principio de archivo .py)
+    """
+    Descripcion corta archivo.
+
+    Descripcion detallada archivo
+    Need to use
+      ::
+        <file>(function)(other)
+
+    """
+
+2. Comentario en clases/funciones (Acordarse de indentar)
+    """
+    Descripcion corta
+
+    Descripcion larga
+
+    Parameters
+    ----------
+    parametro : caracteristica (virtual, callable,etc)
+    Que es este parámetro
+
+    Returns
+    -------
+    t : callable
+    The decorated test `t`.
+
+    Examples
+    --------
+    Algun ejemplo?
+
+    """
+3. Comentarios internos de codigo (indentados)
+    """comentario de codigo"""

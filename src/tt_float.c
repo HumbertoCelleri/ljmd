@@ -29,30 +29,100 @@ float area(cell_t c){
 }
 
 
-/*
-struct _cell::_cell(int na){
-    natoms = na;
-};*/
 
-/*
-main(){
-    _cell cc(10, 0, array);
 
-    int o = cc.owner
-}*/
+/* main */
+int run(inp in) {
+    int nprint, i;
+    char restfile[BLEN], trajfile[BLEN], ergfile[BLEN], line[BLEN];
+    FILE *fp,*traj,*erg;
+    mdsys_t sys;
 
-/* structure to hold the complete information 
- * about the MD system */
-/*
-struct _mdsys {
-    double dt, mass, epsilon, sigma, box, rcut;
-    double ekin, epot, temp, _pad1;
-    double *pos, *vel, *frc;
-    cell_t *clist;
-    int *plist, _pad2;
-    int natoms, nfi, nsteps, nthreads;
-    int ngrid, ncell, npair, nidx;
-    double delta;
-};
-typedef struct _mdsys mdsys_t;
-*/
+#if defined(_OPENMP)
+#pragma omp parallel
+    {
+        if(0 == omp_get_thread_num()) {
+            sys.nthreads=omp_get_num_threads();
+            printf("Running OpenMP version using %d threads\n", sys.nthreads);
+        }
+    }
+#else
+    sys.nthreads=1;
+#endif
+
+    /* read input file */
+    if(get_a_line(stdin,line)) return 1;
+    sys.natoms=atoi(line);
+    if(get_a_line(stdin,line)) return 1;
+    sys.mass=atof(line);
+    if(get_a_line(stdin,line)) return 1;
+    sys.epsilon=atof(line);
+    if(get_a_line(stdin,line)) return 1;
+    sys.sigma=atof(line);
+    if(get_a_line(stdin,line)) return 1;
+    sys.rcut=atof(line);
+    if(get_a_line(stdin,line)) return 1;
+    sys.box=atof(line);
+    if(get_a_line(stdin,restfile)) return 1;
+    if(get_a_line(stdin,trajfile)) return 1;
+    if(get_a_line(stdin,ergfile)) return 1;
+    if(get_a_line(stdin,line)) return 1;
+    sys.nsteps=atoi(line);
+    if(get_a_line(stdin,line)) return 1;
+    sys.dt=atof(line);
+    if(get_a_line(stdin,line)) return 1;
+    nprint=atoi(line);
+
+    /* allocate memory */
+    sys.pos=(double *)malloc(3*sys.natoms*sizeof(double));
+    sys.vel=(double *)malloc(3*sys.natoms*sizeof(double));
+    sys.frc=(double *)malloc(sys.nthreads*3*sys.natoms*sizeof(double));
+
+    /* read restart */
+    fp=fopen(restfile,"r");
+    if(fp) {
+        int natoms;
+        natoms=sys.natoms;
+        
+        for (i=0; i<natoms; ++i) {
+            fscanf(fp,"%lf%lf%lf",sys.pos+i, sys.pos+natoms+i, sys.pos+2*natoms+i);
+        }
+        for (i=0; i<natoms; ++i) {
+            fscanf(fp,"%lf%lf%lf",sys.vel+i, sys.vel+natoms+i, sys.vel+2*natoms+i);
+        }
+        fclose(fp);
+        azzero(sys.frc, 3*sys.nthreads*sys.natoms);
+    } else {
+        perror("cannot read restart file");
+        return 3;
+    }
+
+    /* initialize forces and energies.*/
+    sys.nfi=0;
+    sys.clist=NULL;
+    sys.plist=NULL;
+    updcells(&sys);
+    force(&sys);
+    ekin(&sys);
+    
+    erg=fopen(ergfile,"w");
+    traj=fopen(trajfile,"w");
+
+    printf("Starting simulation with %d atoms for %d steps.\n",sys.natoms, sys.nsteps);
+    printf("     NFI            TEMP            EKIN                 EPOT              ETOT\n");
+    output(&sys, erg, traj);
+
+    
+    // clean up: close files, free memory 
+    printf("Simulation Done.\n");
+    fclose(erg);
+    fclose(traj);
+    free(sys.pos);
+    free(sys.vel);
+    free(sys.frc);
+    free_cell_list(&sys);
+    
+    return 0;
+}
+
+//EOF

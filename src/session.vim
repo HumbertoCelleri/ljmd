@@ -284,7 +284,7 @@ set undofile
 set viminfo='100,<50,s10,h,n~/.vim/dirs/viminfo
 set wildignore=*.pyc
 set wildmode=list:longest
-set window=43
+set window=39
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
@@ -300,6 +300,9 @@ badd +0 makefile
 badd +0 ljmd.c
 badd +0 tt2_float.py
 badd +0 tt_float.c
+badd +0 lj.c
+badd +0 ~/my_projects/ljmd/Makefile
+badd +0 ~/my_projects/ljmd/Obj-serial/Makefile
 args tt.c
 edit tt_float.c
 set splitbelow splitright
@@ -309,8 +312,8 @@ vsplit
 wincmd w
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 65 + 86) / 172)
-exe 'vert 2resize ' . ((&columns * 106 + 86) / 172)
+exe 'vert 1resize ' . ((&columns * 65 + 81) / 162)
+exe 'vert 2resize ' . ((&columns * 96 + 81) / 162)
 argglobal
 xnoremap <buffer> <silent> \a} `>a}`<i{
 xnoremap <buffer> <silent> \a{ `>a}`<i{
@@ -424,11 +427,11 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 20) / 41)
+let s:l = 29 - ((21 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+29
 normal! 0
 wincmd w
 argglobal
@@ -546,15 +549,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 7 - ((6 * winheight(0) + 20) / 41)
+let s:l = 52 - ((36 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-7
+52
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 65 + 86) / 172)
-exe 'vert 2resize ' . ((&columns * 106 + 86) / 172)
+exe 'vert 1resize ' . ((&columns * 65 + 81) / 162)
+exe 'vert 2resize ' . ((&columns * 96 + 81) / 162)
 tabedit tt.c
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -563,8 +566,8 @@ vsplit
 wincmd w
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 85 + 86) / 172)
-exe 'vert 2resize ' . ((&columns * 86 + 86) / 172)
+exe 'vert 1resize ' . ((&columns * 85 + 81) / 162)
+exe 'vert 2resize ' . ((&columns * 76 + 81) / 162)
 argglobal
 xnoremap <buffer> <silent> \a} `>a}`<i{
 xnoremap <buffer> <silent> \a{ `>a}`<i{
@@ -678,7 +681,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 20) / 41)
+let s:l = 1 - ((0 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -800,15 +803,15 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 37 - ((33 * winheight(0) + 20) / 41)
+let s:l = 37 - ((34 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 37
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 85 + 86) / 172)
-exe 'vert 2resize ' . ((&columns * 86 + 86) / 172)
+exe 'vert 1resize ' . ((&columns * 85 + 81) / 162)
+exe 'vert 2resize ' . ((&columns * 76 + 81) / 162)
 tabedit tt.py
 set splitbelow splitright
 wincmd t
@@ -927,7 +930,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 18) / 36)
+let s:l = 1 - ((0 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -935,8 +938,21 @@ normal! zt
 normal! 0
 tabedit makefile
 set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 wincmd t
 set winheight=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 80 + 81) / 162)
+exe '2resize ' . ((&lines * 18 + 20) / 40)
+exe 'vert 2resize ' . ((&columns * 81 + 81) / 162)
+exe '3resize ' . ((&lines * 18 + 20) / 40)
+exe 'vert 3resize ' . ((&columns * 81 + 81) / 162)
 argglobal
 xnoremap <buffer> <silent> \a} `>a}`<i{
 xnoremap <buffer> <silent> \a{ `>a}`<i{
@@ -1050,12 +1066,260 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 18) / 36)
+let s:l = 1 - ((0 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 1
-normal! 01l
+normal! 0
+wincmd w
+argglobal
+edit ~/my_projects/ljmd/Makefile
+xnoremap <buffer> <silent> \a} `>a}`<i{
+xnoremap <buffer> <silent> \a{ `>a}`<i{
+xnoremap <buffer> <silent> \a) `>a)`<i(
+xnoremap <buffer> <silent> \a( `>a)`<i(
+xnoremap <buffer> <silent> \a' `>a'`<i'
+xnoremap <buffer> <silent> \a] `>a]`<i[
+xnoremap <buffer> <silent> \a[ `>a]`<i[
+xnoremap <buffer> <silent> \a" `>a"`<i"
+xnoremap <buffer> <silent> \a` `>a``<i`
+setlocal keymap=
+setlocal noarabic
+setlocal noautoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=sO:#\ -,mO:#\ \ ,b:#
+setlocal commentstring=#\ %s
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+set cursorline
+setlocal cursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'make'
+setlocal filetype=make
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=croql
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=^\\s*include
+setlocal includeexpr=
+setlocal indentexpr=GetMakeIndent()
+setlocal indentkeys=!^F,o,O,<:>,=else,=endif
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=%!airline#statusline(2)
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'make'
+setlocal syntax=make
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal undofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 22 - ((10 * winheight(0) + 9) / 18)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+22
+normal! 011l
+wincmd w
+argglobal
+edit ~/my_projects/ljmd/Obj-serial/Makefile
+xnoremap <buffer> <silent> \a} `>a}`<i{
+xnoremap <buffer> <silent> \a{ `>a}`<i{
+xnoremap <buffer> <silent> \a) `>a)`<i(
+xnoremap <buffer> <silent> \a( `>a)`<i(
+xnoremap <buffer> <silent> \a' `>a'`<i'
+xnoremap <buffer> <silent> \a] `>a]`<i[
+xnoremap <buffer> <silent> \a[ `>a]`<i[
+xnoremap <buffer> <silent> \a" `>a"`<i"
+xnoremap <buffer> <silent> \a` `>a``<i`
+setlocal keymap=
+setlocal noarabic
+setlocal noautoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=sO:#\ -,mO:#\ \ ,b:#
+setlocal commentstring=#\ %s
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+set cursorline
+setlocal cursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'make'
+setlocal filetype=make
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=croql
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=^\\s*include
+setlocal includeexpr=
+setlocal indentexpr=GetMakeIndent()
+setlocal indentkeys=!^F,o,O,<:>,=else,=endif
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=%!airline#statusline(3)
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'make'
+setlocal syntax=make
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal undofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 9) / 18)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 80 + 81) / 162)
+exe '2resize ' . ((&lines * 18 + 20) / 40)
+exe 'vert 2resize ' . ((&columns * 81 + 81) / 162)
+exe '3resize ' . ((&lines * 18 + 20) / 40)
+exe 'vert 3resize ' . ((&columns * 81 + 81) / 162)
 tabedit ljmd.c
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -1068,12 +1332,11 @@ split
 wincmd w
 wincmd t
 set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 36 + 22) / 44)
-exe 'vert 1resize ' . ((&columns * 91 + 86) / 172)
-exe '2resize ' . ((&lines * 14 + 22) / 44)
-exe 'vert 2resize ' . ((&columns * 80 + 86) / 172)
-exe '3resize ' . ((&lines * 21 + 22) / 44)
-exe 'vert 3resize ' . ((&columns * 80 + 86) / 172)
+exe 'vert 1resize ' . ((&columns * 91 + 81) / 162)
+exe '2resize ' . ((&lines * 14 + 20) / 40)
+exe 'vert 2resize ' . ((&columns * 70 + 81) / 162)
+exe '3resize ' . ((&lines * 22 + 20) / 40)
+exe 'vert 3resize ' . ((&columns * 70 + 81) / 162)
 argglobal
 xnoremap <buffer> <silent> \a} `>a}`<i{
 xnoremap <buffer> <silent> \a{ `>a}`<i{
@@ -1187,12 +1450,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 504 - ((21 * winheight(0) + 18) / 36)
+let s:l = 474 - ((32 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-504
-normal! 08l
+474
+normal! 0
 wincmd w
 argglobal
 edit ljmd.c
@@ -1429,20 +1692,272 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 125 - ((16 * winheight(0) + 10) / 21)
+let s:l = 125 - ((17 * winheight(0) + 11) / 22)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 125
 normal! 0
 wincmd w
-exe '1resize ' . ((&lines * 36 + 22) / 44)
-exe 'vert 1resize ' . ((&columns * 91 + 86) / 172)
-exe '2resize ' . ((&lines * 14 + 22) / 44)
-exe 'vert 2resize ' . ((&columns * 80 + 86) / 172)
-exe '3resize ' . ((&lines * 21 + 22) / 44)
-exe 'vert 3resize ' . ((&columns * 80 + 86) / 172)
-tabnext 1
+exe 'vert 1resize ' . ((&columns * 91 + 81) / 162)
+exe '2resize ' . ((&lines * 14 + 20) / 40)
+exe 'vert 2resize ' . ((&columns * 70 + 81) / 162)
+exe '3resize ' . ((&lines * 22 + 20) / 40)
+exe 'vert 3resize ' . ((&columns * 70 + 81) / 162)
+tabedit lj.c
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+wincmd t
+set winheight=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 60 + 81) / 162)
+exe 'vert 2resize ' . ((&columns * 101 + 81) / 162)
+argglobal
+xnoremap <buffer> <silent> \a} `>a}`<i{
+xnoremap <buffer> <silent> \a{ `>a}`<i{
+xnoremap <buffer> <silent> \a) `>a)`<i(
+xnoremap <buffer> <silent> \a( `>a)`<i(
+xnoremap <buffer> <silent> \a' `>a'`<i'
+xnoremap <buffer> <silent> \a] `>a]`<i[
+xnoremap <buffer> <silent> \a[ `>a]`<i[
+xnoremap <buffer> <silent> \a" `>a"`<i"
+xnoremap <buffer> <silent> \a` `>a``<i`
+setlocal keymap=
+setlocal noarabic
+setlocal noautoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal cindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+set cursorline
+setlocal cursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal expandtab
+if &filetype != 'c'
+setlocal filetype=c
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=croql
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=ccomplete#Complete
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=4
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=%!airline#statusline(1)
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'c'
+setlocal syntax=c
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal undofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 11 - ((8 * winheight(0) + 18) / 37)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+11
+normal! 0
+wincmd w
+argglobal
+edit lj.c
+xnoremap <buffer> <silent> \a} `>a}`<i{
+xnoremap <buffer> <silent> \a{ `>a}`<i{
+xnoremap <buffer> <silent> \a) `>a)`<i(
+xnoremap <buffer> <silent> \a( `>a)`<i(
+xnoremap <buffer> <silent> \a' `>a'`<i'
+xnoremap <buffer> <silent> \a] `>a]`<i[
+xnoremap <buffer> <silent> \a[ `>a]`<i[
+xnoremap <buffer> <silent> \a" `>a"`<i"
+xnoremap <buffer> <silent> \a` `>a``<i`
+setlocal keymap=
+setlocal noarabic
+setlocal noautoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal cindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal colorcolumn=
+setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal concealcursor=
+setlocal conceallevel=0
+setlocal completefunc=
+setlocal nocopyindent
+setlocal cryptmethod=
+setlocal nocursorbind
+setlocal nocursorcolumn
+set cursorline
+setlocal cursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal expandtab
+if &filetype != 'c'
+setlocal filetype=c
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=croql
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal noinfercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+setlocal nolinebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+set number
+setlocal number
+setlocal numberwidth=4
+setlocal omnifunc=ccomplete#Complete
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norelativenumber
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal nosmartindent
+setlocal softtabstop=4
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=en
+setlocal statusline=%!airline#statusline(2)
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'c'
+setlocal syntax=c
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal undofile
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 469 - ((30 * winheight(0) + 18) / 37)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+469
+normal! 015l
+wincmd w
+exe 'vert 1resize ' . ((&columns * 60 + 81) / 162)
+exe 'vert 2resize ' . ((&columns * 101 + 81) / 162)
+tabnext 5
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif

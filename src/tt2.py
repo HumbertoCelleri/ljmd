@@ -29,10 +29,15 @@ class cell_t(C.Structure):
 #---- test of above
 import numpy as np
 
-aa = np.ones(3)
+aa = np.ones(3, dtype=np.int32)*10
 aaa = aa.ctypes.data_as(C.POINTER(C.c_int))
 c = cell_t(3, 4, aaa)
 
-print c.idxlist
-
+#print " ---> parece q c.idxlist se inicilizo en zero :(\n", c.idxlist
+print " ---> segun el 'tt.c', el area deberia ser 120: "
+print " area: ", c.area() # efectivamente!
+"""
+c.idxlist[0] = 10  # ahora el area deberia ser 120
+print " area: ", c.area()   # efectivamente!
+"""
 #EOF

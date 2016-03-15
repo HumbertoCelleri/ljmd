@@ -16,7 +16,7 @@ typedef struct _cell cell_t;
 
 
 int area(cell_t c){
-    return c.natoms*c.owner;
+    return c.natoms*c.owner*c.idxlist[0];
 }
 
 

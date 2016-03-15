@@ -11,8 +11,17 @@ struct _cell {
     int natoms;                 /* number of atoms in this cell */
     int owner;                  /* task/thread id that owns this cell */
     float *idxlist;               /* list of atom indices */
+    //void run(void); // imposible in C?
 };
 typedef struct _cell cell_t;
+
+
+struct _another{
+    int a;
+    float b;
+    float *bb;
+};
+typedef struct _another inp;
 
 
 float area(cell_t c){

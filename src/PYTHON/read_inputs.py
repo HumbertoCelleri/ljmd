@@ -1,7 +1,5 @@
-#´´´
 #Esta funcion lee los inputs de los archivos *.inp y
 #*.rest y los devuelve como diccionario.
-#´´´
 
 import numpy as np
 

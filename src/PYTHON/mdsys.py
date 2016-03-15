@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import ctypes as C
-#CLIB = C.CDLL('./libc.so')
+CLIB = C.CDLL('./libc.so')
 
 
 class cell_t(C.Structure):
@@ -55,10 +55,10 @@ class mdsys_t(C.Structure):
         cellfreq = 4
         for i in range(0, pasos):
 
-             CLIB.velverlet(byref(self))
+             CLIB.velverlet(C.byref(self))
 
              if i % cellfreq == 0:
-                  CLIB.updcells(byref(self))
+                  CLIB.updcells(C.byref(self))
 
              
     def input(self, dict):
@@ -75,3 +75,6 @@ class mdsys_t(C.Structure):
         self.vel = (C.c_double*(3*self.natoms))(*dict['vel'])
         self.frc = (C.c_double*(3*self.nthreads*self.natoms))()
         self.nsteps = C.c_int(dict['nsteps'])
+        self.nthreads = C.c_int(1)
+        self.clist = None
+        self.plist = None

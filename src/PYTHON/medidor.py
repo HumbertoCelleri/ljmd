@@ -12,13 +12,14 @@ class Medidor(object):
 
     def kinetic_energy(self, sys):
 
-        CLIB. ekin(C.byref(sys))
+        CLIB.ekin(C.byref(sys))
 
         return sys.ekin
 
 
     def potencial_energy(self, sys):
     
+        CLIB.updcells(C.byref(sys))
         CLIB.force(C.byref(sys))
 
         return sys.epot

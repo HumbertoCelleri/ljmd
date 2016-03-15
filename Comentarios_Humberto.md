@@ -44,7 +44,7 @@ Se genera un archivo de referencia con las estructuras y funciones de ljmd.c
 
 #**ESTANDAR COMENTARIOS**
 
-## En C
+## En C (OJO, que los ``` ``` estan puestos por el MARKDOWN:code)
 1. Comentario archivo (Al principio de archivo .c)
     ```
     /** Descripcion  archivo
@@ -74,7 +74,7 @@ Se genera un archivo de referencia con las estructuras y funciones de ljmd.c
     * Examples
     * --------
     * Algun ejemplo?
-    * 
+    *
     */
     ```
 3. Comentarios internos de codigo (indentados)

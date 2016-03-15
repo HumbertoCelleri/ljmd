@@ -134,7 +134,7 @@
       3. Special comments
         1. Usa **force**
 
-### output
+### **output**
       append data to output
 
       1. Input

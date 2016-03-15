@@ -1,5 +1,6 @@
+SRC=tt_float.c #tt.c
 obj:
-	gcc -c -fPIC tt.c -o tt.o
+	gcc -c -fPIC ${SRC} -o tt.o
 	gcc -shared tt.o -o mylib.so
 
 clean:

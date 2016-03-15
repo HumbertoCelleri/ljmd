@@ -1,11 +1,11 @@
 import numpy as np
 import os
 from read_inputs import *
-import sys
+import mdsys
 
 def main():
     path=os.getcwd() # get path of ljmd.py
-    a=sys.mdsys_t()
+    a=mdsys.mdsys_t()
     dict = read_inputs('argon_108','../..')
     a.input(dict)
 

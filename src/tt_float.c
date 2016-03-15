@@ -112,7 +112,7 @@ int run(inp in) {
     printf("     NFI            TEMP            EKIN                 EPOT              ETOT\n");
     output(&sys, erg, traj);
 
-    
+    /*
     // clean up: close files, free memory 
     printf("Simulation Done.\n");
     fclose(erg);
@@ -121,7 +121,7 @@ int run(inp in) {
     free(sys.vel);
     free(sys.frc);
     free_cell_list(&sys);
-    
+    */
     return 0;
 }
 

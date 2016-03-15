@@ -27,7 +27,26 @@ class Graficador(object):
 
     def histograma_velocidades(self):
         """function that plots histograma de velocidades"""
-        pass
+        lista_vel = []
+
+        for i in range(0,self.sys.natoms):
+            lista_vel.append([self.sys.vel[i],self.sys.vel[i+self.sys.natoms], \
+            self.sys.vel[i+2*self.sys.natoms]] )
+
+        """ ploteo histograma"""
+        #plt.hist()
+        plt.title("Gaussian Histogram")
+        plt.xlabel("Value")
+        plt.ylabel("Frequency")
+        fig = plt.gcf()
+        """
+        gaussian_numbers = np.random.randn(1000)
+        plt.hist(gaussian_numbers)
+        plt.title("Gaussian Histogram")
+        plt.xlabel("Value")
+        plt.ylabel("Frequency")
+        fig = plt.gcf()
+        """
 
     def distribucion_velocidades_3D(self):
         """ function that plots the 3D graf of posicion particules and velocities"""

@@ -20,7 +20,7 @@ class Medidor(object):
     def potencial_energy(self, sys):
     
         CLIB.updcells(C.byref(sys))
-        CLIB.force(C.byref(sys))
+        CLIB.force_morse(C.byref(sys))
 
         return sys.epot
 

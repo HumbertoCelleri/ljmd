@@ -39,7 +39,11 @@ class mdsys_t(C.Structure):
                  ('ncell', C.c_int ),
                  ('npair', C.c_int),
                  ('nidx', C.c_int),
-                 ('delta', C.c_double) ]
+                 ('delta', C.c_double),
+                 ('D_e',C.c_double),
+                 ('a',C.c_double),
+                 ('r_e',C.c_double),
+                 ('method',C.c_int) ]
                  
 
     def __init__(self):
@@ -78,3 +82,10 @@ class mdsys_t(C.Structure):
         self.nsteps = C.c_int(dict['nsteps'])
         self.clist = None
         self.plist = None
+        self.D_e = C.c_double(dict['D_e'])
+        self.a = C.c_double(dict['a'])
+        self.r_e = C.c_double(dict['r_e'])
+        if dict['method']=='lj': 
+            self.method = C.c_int(0)
+        else :
+            self.method = C.c_int(1)

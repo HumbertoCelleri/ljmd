@@ -47,6 +47,8 @@ struct _mdsys {
     int natoms, nfi, nsteps, nthreads;
     int ngrid, ncell, npair, nidx;
     double delta;
+    double D_e,a,r_e;
+    int method;
 };
 typedef struct _mdsys mdsys_t;
 
@@ -243,7 +245,179 @@ void ekin(mdsys_t *sys)
 }
 
 /* compute forces */
-void force(mdsys_t *sys) 
+void force_morse(mdsys_t *sys) 
+{
+    double epot;
+
+    epot = 0.0;
+    
+#if defined(_OPENMP)
+#pragma omp parallel reduction(+:epot)
+#endif
+    {
+        double D_e,a,exp_ar_e,boxby2,rcsq;
+        double *fx, *fy, *fz;
+        const double *rx, *ry, *rz;
+        int i, tid, fromidx, toidx, natoms;
+
+        /* precompute some constants */
+	a = sys->a;
+        exp_ar_e = exp(a * sys->r_e);
+        D_e = sys->D_e;
+        rcsq= sys->rcut * sys->rcut;
+        boxby2 = 0.5*sys->box;
+        natoms = sys->natoms;
+        epot = 0.0;
+        
+        /* let each thread operate on a different
+           part of the enlarged force array */
+#if defined(_OPENMP)
+        tid=omp_get_thread_num();
+#else
+        tid=0;
+#endif
+        fx=sys->frc + (3*tid*natoms);
+        azzero(fx,3*natoms);
+        fy=sys->frc + ((3*tid+1)*natoms);
+        fz=sys->frc + ((3*tid+2)*natoms);
+        rx=sys->pos;
+        ry=sys->pos + natoms;
+        rz=sys->pos + 2*natoms;
+
+        /* self interaction of atoms in cell */
+        for(i=0; i < sys->ncell; i += sys->nthreads) {
+            int j;
+            const cell_t *c1;
+
+            j = i + tid;
+            if (j >= (sys->ncell)) break;
+            c1=sys->clist + j;
+
+            for (j=0; j < c1->natoms-1; ++j) {
+                int ii,k;
+                double rx1, ry1, rz1;
+
+                ii=c1->idxlist[j];
+                rx1=rx[ii];
+                ry1=ry[ii];
+                rz1=rz[ii];
+        
+                for(k=j+1; k < c1->natoms; ++k) {
+                    int jj;
+                    double rx2,ry2,rz2,rsq,r;
+
+                    jj=c1->idxlist[k];
+
+                    /* get distance between particle i and j */
+                    rx2=pbc(rx1 - rx[jj], boxby2, sys->box);
+                    ry2=pbc(ry1 - ry[jj], boxby2, sys->box);
+                    rz2=pbc(rz1 - rz[jj], boxby2, sys->box);
+                    rsq = rx2*rx2 + ry2*ry2 + rz2*rz2;
+		    r = sqrt(rsq);
+
+                    /* compute force and energy if within cutoff */
+                    if (rsq < rcsq) {
+		        double rexpinv,rexp,ffac;
+			
+			rexp = exp(a*r);
+			rexpinv = exp_ar_e/rexp;
+                    
+                        ffac = -D_e*2.0*a* (1.0-rexpinv) * rexpinv/r;
+                        epot += -2.0*D_e* rexpinv + D_e*rexpinv*rexpinv;
+
+                        fx[ii] += rx2*ffac;
+                        fy[ii] += ry2*ffac;
+                        fz[ii] += rz2*ffac;
+                        fx[jj] -= rx2*ffac;
+                        fy[jj] -= ry2*ffac;
+                        fz[jj] -= rz2*ffac;
+                    }
+                }
+            }
+        }    
+
+        /* interaction of atoms in different cells */
+        for(i=0; i < sys->npair; i += sys->nthreads) {
+            int j;
+            const cell_t *c1, *c2;
+
+            j = i + tid;
+            if (j >= (sys->npair)) break;
+            c1=sys->clist + sys->plist[2*j];
+            c2=sys->clist + sys->plist[2*j+1];
+        
+            for (j=0; j < c1->natoms; ++j) {
+                int ii, k;
+                double rx1, ry1, rz1;
+
+                ii=c1->idxlist[j];
+                rx1=rx[ii];
+                ry1=ry[ii];
+                rz1=rz[ii];
+        
+                for(k=0; k < c2->natoms; ++k) {
+                    int jj;
+                    double rx2,ry2,rz2,rsq,r;
+                
+                    jj=c2->idxlist[k];
+                
+                    /* get distance between particle i and j */
+                    rx2=pbc(rx1 - rx[jj], boxby2, sys->box);
+                    ry2=pbc(ry1 - ry[jj], boxby2, sys->box);
+                    rz2=pbc(rz1 - rz[jj], boxby2, sys->box);
+                    rsq = rx2*rx2 + ry2*ry2 + rz2*rz2;
+		    r=sqrt(rsq);
+                
+                    /* compute force and energy if within cutoff */
+                    if (rsq < rcsq) {
+		        double rexpinv,rexp,ffac;
+			
+			rexp = exp(a*r);
+			rexpinv = exp_ar_e/rexp;
+                    
+                        ffac = -D_e*2.0*a* (1.0-rexpinv) * rexpinv/r;
+                        epot += -2.0*D_e* rexpinv + D_e*rexpinv*rexpinv;
+
+                        fx[ii] += rx2*ffac;
+                        fy[ii] += ry2*ffac;
+                        fz[ii] += rz2*ffac;
+                        fx[jj] -= rx2*ffac;
+                        fy[jj] -= ry2*ffac;
+                        fz[jj] -= rz2*ffac;
+                    }
+                }
+            }
+        }
+
+        /* before reducing the forces, we have to make sure 
+           that all threads are done adding to them. */
+#if defined (_OPENMP)
+#pragma omp barrier
+#endif
+        /* set equal chunks of index ranges */
+        i = 1 + (3*natoms / sys->nthreads);
+        fromidx = tid * i;
+        toidx = fromidx + i;
+        if (toidx > 3*natoms) toidx = 3*natoms;
+
+        /* reduce forces from threads with tid != 0 into
+           the storage of the first thread. since we have
+           threads already spawned, we do this in parallel. */
+        for (i=1; i < sys->nthreads; ++i) {
+            int offs, j;
+
+            offs = 3*i*natoms;
+
+            for (j=fromidx; j < toidx; ++j) {
+                sys->frc[j] += sys->frc[offs+j];
+            }
+        }
+    }
+    sys->epot = epot;
+}
+
+/* compute forces */
+void force_lj(mdsys_t *sys) 
 {
     double epot;
 
@@ -412,7 +586,7 @@ void force(mdsys_t *sys)
 }
 
 /* velocity verlet */
-void velverlet(mdsys_t *sys)
+void velverlet(mdsys_t *sys, int method)
 {
     int i;
     double dtmf;
@@ -425,7 +599,9 @@ void velverlet(mdsys_t *sys)
     }
 
     /* compute forces and potential energy */
-    force(sys);
+    if (method==0)
+        force_lj(sys);
+    else force_morse(sys);
 
     /* second part: propagate velocities by another half step */
     for (i=0; i<3*sys->natoms; ++i) {
@@ -447,115 +623,3 @@ static void output(mdsys_t *sys, FILE *erg, FILE *traj)
     }
 }
 
-
-/* main */
-int main(int argc, char **argv) 
-{
-    int nprint, i;
-    char restfile[BLEN], trajfile[BLEN], ergfile[BLEN], line[BLEN];
-    FILE *fp,*traj,*erg;
-    mdsys_t sys;
-
-#if defined(_OPENMP)
-#pragma omp parallel
-    {
-        if(0 == omp_get_thread_num()) {
-            sys.nthreads=omp_get_num_threads();
-            printf("Running OpenMP version using %d threads\n", sys.nthreads);
-        }
-    }
-#else
-    sys.nthreads=1;
-#endif
-
-    /* read input file */
-    if(get_a_line(stdin,line)) return 1;
-    sys.natoms=atoi(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.mass=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.epsilon=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.sigma=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.rcut=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.box=atof(line);
-    if(get_a_line(stdin,restfile)) return 1;
-    if(get_a_line(stdin,trajfile)) return 1;
-    if(get_a_line(stdin,ergfile)) return 1;
-    if(get_a_line(stdin,line)) return 1;
-    sys.nsteps=atoi(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.dt=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    nprint=atoi(line);
-
-    /* allocate memory */
-    sys.pos=(double *)malloc(3*sys.natoms*sizeof(double));
-    sys.vel=(double *)malloc(3*sys.natoms*sizeof(double));
-    sys.frc=(double *)malloc(sys.nthreads*3*sys.natoms*sizeof(double));
-
-    /* read restart */
-    fp=fopen(restfile,"r");
-    if(fp) {
-        int natoms;
-        natoms=sys.natoms;
-        
-        for (i=0; i<natoms; ++i) {
-            fscanf(fp,"%lf%lf%lf",sys.pos+i, sys.pos+natoms+i, sys.pos+2*natoms+i);
-        }
-        for (i=0; i<natoms; ++i) {
-            fscanf(fp,"%lf%lf%lf",sys.vel+i, sys.vel+natoms+i, sys.vel+2*natoms+i);
-        }
-        fclose(fp);
-        azzero(sys.frc, 3*sys.nthreads*sys.natoms);
-    } else {
-        perror("cannot read restart file");
-        return 3;
-    }
-
-    /* initialize forces and energies.*/
-    sys.nfi=0;
-    sys.clist=NULL;
-    sys.plist=NULL;
-    updcells(&sys);
-    force(&sys);
-    ekin(&sys);
-    
-    erg=fopen(ergfile,"w");
-    traj=fopen(trajfile,"w");
-
-    printf("Starting simulation with %d atoms for %d steps.\n",sys.natoms, sys.nsteps);
-    printf("     NFI            TEMP            EKIN                 EPOT              ETOT\n");
-    output(&sys, erg, traj);
-
-    /**************************************************/
-    /* main MD loop */
-    for(sys.nfi=1; sys.nfi <= sys.nsteps; ++sys.nfi) {
-
-        /* write output, if requested */
-        if ((sys.nfi % nprint) == 0) 
-            output(&sys, erg, traj);
-
-        /* propagate system and recompute energies */
-        velverlet(&sys);
-        ekin(&sys);
-
-        /* update cell list */
-        if ((sys.nfi % cellfreq) == 0) 
-            updcells(&sys);
-    }
-    /**************************************************/
-
-    /* clean up: close files, free memory */
-    printf("Simulation Done.\n");
-    fclose(erg);
-    fclose(traj);
-    free(sys.pos);
-    free(sys.vel);
-    free(sys.frc);
-    free_cell_list(&sys);
-
-    return 0;
-}

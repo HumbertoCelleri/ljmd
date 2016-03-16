@@ -18,6 +18,10 @@ def read_inputs ( inpfile , path ) :
     dict['nsteps'] = int(ifile.readline().split(' ')[0]) # Number of MD steps
     dict['dt'] = float(ifile.readline().split(' ')[0]) # MD time step (in fs)
     dict['nprint'] = int(ifile.readline().split(' ')[0]) # Output print frequency
+    dict['D_e'] = dict['epsilon']
+    dict['a'] = 6./dict['sigma']
+    dict['r_e'] = dict['sigma']
+    dict['method'] = 'lj'
     ifile.close()
     
     data=np.loadtxt(path+'/examples/'+dict['restfile'])

@@ -64,6 +64,16 @@ class mdsys_t(C.Structure):
              if i % cellfreq == 0:
                   CLIB.updcells(C.byref(self))
 
+    def evolution_Tconstante(self, pasos = 1, temp = 40.00, nu = 0.0001):
+
+        self.evolution()
+
+        import termostato
+        term = termostato.Andersen_termostat(temp = temp, nu = nu)
+
+        term.set_temp(self)
+
+
              
     def input(self, dict):
         """ Agregar funcion input de datos """

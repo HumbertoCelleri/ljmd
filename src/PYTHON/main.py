@@ -24,28 +24,25 @@ def main():
 
     # Defino un objeto medidor 
     med = medidor.Medidor()
-    # Defino un termostato 
-    term = termostato.Andersen_termostat(temp = 20.0, nu = 0.001)
 
     # Inicializo los parametros del sistema
     a.input(parameters)
 
-    for i in range(0, 1000):
+    for i in range(0, 10000):
         
         # Rutina de evolucion del sistema 
-        a.evolution()
-#        term.set_temp(a)
+        a.evolution_Tconstante(temp = 10.00)
+        
 
         if i % nprint == 0:
 
-             energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
-             term.set_temp(a)
+            energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
 
-             temp = med.temperature(a)
+            temp = med.temperature(a)
 
-             # Imprime los valores 
-             print i, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
-
+            # Imprime los valores 
+            print i, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
+        
 
 if __name__ == "__main__":
     main()

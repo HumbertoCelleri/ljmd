@@ -13,17 +13,16 @@ class Andersen_termostat(object):
         natoms = mdsys_t.natoms
 
         kboltz = 0.0019872067
+        mv2 = 2390.0573
 
-       # velstd = (mdsys_t.mass / (kboltz * self.temp))**0.5
-
-        velstd = 20
+        velstd = ((kboltz * self.temp) / (mdsys_t.mass * mv2))**0.5
 
         for i in range(0, natoms):
 
             if rand.random() < (self.nu * mdsys_t.dt):
 
-                mdsys_t.vel[i] = np.random.normal(0, velstd)
-                mdsys_t.vel[i + natoms] = np.random.normal(0, velstd)
-                mdsys_t.vel[i + 2*natoms] = np.random.normal(0, velstd)
+                mdsys_t.vel[i] = np.random.normal(0.00, velstd)
+                mdsys_t.vel[i + natoms] = np.random.normal(0.00, velstd)
+                mdsys_t.vel[i + 2*natoms] = np.random.normal(0.00, velstd)
          
 

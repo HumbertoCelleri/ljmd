@@ -70,6 +70,7 @@ class Graficador(object):
         lista_pos = []
 
         for i in range(0,self.sys.natoms):
+            """ Append positions in (x,y,z) format"""
             lista_pos.append([self.sys.pos[i],self.sys.pos[i+self.sys.natoms], \
             self.sys.pos[i+2*self.sys.natoms]] )
 

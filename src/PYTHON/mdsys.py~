@@ -43,11 +43,7 @@ class mdsys_t(C.Structure):
                  
 
     def __init__(self):
-
-        CLIB.set_nthreads(C.byref(self))
-        self.clist = None
-        self.plist = None
-       
+        pass
 
 
     def evolution(self, pasos = 1):
@@ -75,8 +71,10 @@ class mdsys_t(C.Structure):
         self.sigma = C.c_double(dict['sigma'])
         self.box = C.c_double(dict['box'])
         self.rcut = C.c_double(dict['rcut'])
+        self.nthreads = C.c_int(1)
         self.pos = (C.c_double*(3*self.natoms))(*dict['pos'])
         self.vel = (C.c_double*(3*self.natoms))(*dict['vel'])
         self.frc = (C.c_double*(3*self.nthreads*self.natoms))()
         self.nsteps = C.c_int(dict['nsteps'])
-
+        self.clist = None
+        self.plist = None

@@ -448,23 +448,6 @@ static void output(mdsys_t *sys, FILE *erg, FILE *traj)
 }
 
 
-void set_nthreads(mdsys_t *sys)
-{
-#if defined(_OPENMP)
-#pragma omp parallel
-    {
-        if(0 == omp_get_thread_num()) {
-            sys->nthreads = omp_get_num_threads();
-            printf("Running OpenMP version using %d threads\n", sys->nthreads);
-        }
-    }
-#else
-    sys->nthreads=1;
-#endif
-}
-
-
-
 /* main */
 int main(int argc, char **argv) 
 {

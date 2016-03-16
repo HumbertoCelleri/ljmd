@@ -3,6 +3,7 @@ import os
 from read_inputs import *
 import mdsys
 import medidor
+import termostato
 
 def main():
 
@@ -23,18 +24,23 @@ def main():
 
     # Defino un objeto medidor 
     med = medidor.Medidor()
+    # Defino un termostato 
+    term = termostato.Andersen_termostat(temp = 20.0, nu = 0.001)
 
     # Inicializo los parametros del sistema
     a.input(parameters)
 
-    for i in range(0,nsteps):
+    for i in range(0, 1000):
         
         # Rutina de evolucion del sistema 
         a.evolution()
+#        term.set_temp(a)
 
         if i % nprint == 0:
 
              energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
+             term.set_temp(a)
+
              temp = med.temperature(a)
 
              # Imprime los valores 

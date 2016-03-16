@@ -21,7 +21,7 @@ serial:
 
 parallel:
 	$(CC) -c -fopenmp -fPIC ljmd.c 
-	$(CC) -shared ljmd.o -o -fopenmp libc_MP.so
+	$(CC) -shared ljmd.o -fopenmp -o libc_MP.so
 
 
 clean:

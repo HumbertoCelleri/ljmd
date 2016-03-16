@@ -13,7 +13,7 @@ Options:\n\n\
 
 all: 
 	$(CC) -c -fPIC ljmd.c 
-	$(CC) -shared ljmd.o -o c
+	$(CC) -shared ljmd.o -o libc.so
 
 clean:
-	rm -rfv ljmd.o ljmd.o
+	rm -rfv ljmd.o ljmd.so

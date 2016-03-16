@@ -27,6 +27,7 @@ class Medidor(object):
 
     def temperature(self, sys):
 
+        CLIB.ekin(C.byref(sys))
         return sys.temp
 
 

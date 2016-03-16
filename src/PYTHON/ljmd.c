@@ -173,9 +173,9 @@ void updcells(mdsys_t *sys)
             }
         }
         sys->npair = npair;
-        printf("Cell list has %dx%dx%d=%d cells with %d/%d pairs and "
-               "%d atoms/celllist.\n", ngrid, ngrid, ngrid, sys->ncell, 
-               sys->npair, ncell*(ncell-1)/2, nidx);
+//        printf("Cell list has %dx%dx%d=%d cells with %d/%d pairs and "
+//               "%d atoms/celllist.\n", ngrid, ngrid, ngrid, sys->ncell, 
+//               sys->npair, ncell*(ncell-1)/2, nidx);
     }
 
     /* reset cell list and sort atoms into cells */

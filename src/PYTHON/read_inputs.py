@@ -1,10 +1,10 @@
-#Esta funcion lee los inputs de los archivos *.inp y
-#*.rest y los devuelve como diccionario.
-
 import numpy as np
 
-def read_inputs ( caso , path ) :
-    ifile = open(path+'/examples/'+caso+'.inp','r')
+def read_inputs ( inpfile , path ) :
+    """Esta funcion lee los datos de los dos archivos de entrada y los
+    devuelve como diccionario."""
+
+    ifile = open(path+'/examples/'+inpfile+'.inp','r')
     dict={}
     dict['natoms'] = int(ifile.readline().split(' ')[0]) # Number of atoms
     dict['mass'] = float(ifile.readline().split(' ')[0]) # Mass in AMU

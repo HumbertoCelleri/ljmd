@@ -11,22 +11,20 @@ def main():
     y hace evolucionar. Cada 1000 pasos mide las energias, y la 
     temperatura
     """
-
+    
+    # Lee el archivo de entrada y guarda en diccionario
     path = os.getcwd() # get path of ljmd.py
     a = mdsys.mdsys_t()
     parameters = read_inputs('argon_108','../..')
 
     # El programa corre nsteps pasos e imprimi cada nprint 
-
     nsteps = parameters['nsteps']
     nprint = parameters['nprint']
 
     # Defino un objeto medidor 
-
     med = medidor.Medidor()
 
     # Inicializo los parametros del sistema
-
     a.input(parameters)
 
     for i in range(0,nsteps):

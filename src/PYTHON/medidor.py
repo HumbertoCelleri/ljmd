@@ -41,9 +41,3 @@ class Medidor(object):
         return sys.vel
 
 
-
-
-
-
-
-

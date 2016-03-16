@@ -3,6 +3,7 @@ import os
 from read_inputs import *
 import mdsys
 import medidor
+import termostato
 
 def main():
 
@@ -27,19 +28,21 @@ def main():
     # Inicializo los parametros del sistema
     a.input(parameters)
 
-    for i in range(0,nsteps):
+    for i in range(0, 10000):
         
         # Rutina de evolucion del sistema 
-        a.evolution()
+        a.evolution_Tconstante(temp = 10.00)
+        
 
         if i % nprint == 0:
 
-             energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
-             temp = med.temperature(a)
+            energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
 
-             # Imprime los valores 
-             print i, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
+            temp = med.temperature(a)
 
+            # Imprime los valores 
+            print i, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
+        
 
 if __name__ == "__main__":
     main()

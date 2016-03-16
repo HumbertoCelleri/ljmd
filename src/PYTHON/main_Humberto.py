@@ -46,19 +46,24 @@ def main():
              # Imprime los valores 
              print i, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
              #Graf.distribucion_posiciones_3D()
+             #a.nfi = i
 
     # Inicializamos la clase
-    #    Graf = graficador.Graficador(a,med)
+    Graf = graficador.Graficador(a,med)
     # Grafica scatter
     #    Graf.distribucion_posiciones_3D()
 
     # Grafica   quiver
     #    Graf.distribucion_velocidades_3D()
 
+    # Grafica histograma velocidades
+    Graf.histograma_velocidades()
+    
+    
     ## Imprimimos salidas
-    output = io_ljmd.Print_outputs('argon_108','argon_108','')
-    output.printDAT(100,a)
-    output.printXYZ(100,a)
+    #output = io_ljmd.Print_outputs('argon_108','argon_108','')
+    #output.printDAT(100,a)
+    #output.printXYZ(100,a)
 
 if __name__ == "__main__":
     main()

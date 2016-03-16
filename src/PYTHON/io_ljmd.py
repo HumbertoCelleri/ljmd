@@ -36,9 +36,10 @@ class Read_inputs(Io_ljmd):
             input_dict['nprint'] = int(ifile.readline().split(' ')[0]) # Output print frequency
             ifile.close()
             
-            data=np.loadtxt(self.path+dict['restfile'])
-            input_dict['pos']=np.reshape(data[:dict['natoms'],:],[dict['natoms']*3],'F')
-            input_dict['vel']=np.reshape(data[dict['natoms']:,:],[dict['natoms']*3],'F')
+            data=np.loadtxt(self.path+input_dict['restfile'])
+            input_dict['pos']=np.reshape(data[:input_dict['natoms'],:],[input_dict['natoms']*3],'F')
+            input_dict['vel']=np.reshape(data[input_dict['natoms']:,:],[input_dict['natoms']*3],'F')
+            
             del data
             
             return input_dict

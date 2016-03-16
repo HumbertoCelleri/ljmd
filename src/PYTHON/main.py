@@ -12,24 +12,35 @@ def main():
     temperatura
     """
 
-    path=os.getcwd() # get path of ljmd.py
-    a=mdsys.mdsys_t()
-    dict = read_inputs('argon_108','../..')
-    a.input(dict)
+    path = os.getcwd() # get path of ljmd.py
+    a = mdsys.mdsys_t()
+    parameters = read_inputs('argon_108','../..')
+
+    # El programa corre nsteps pasos e imprimi cada nprint 
+
+    nsteps = parameters['nsteps']
+    nprint = parameters['nprint']
 
     # Defino un objeto medidor 
+
     med = medidor.Medidor()
 
-    for i in range(1,100):
+    # Inicializo los parametros del sistema
+
+    a.input(parameters)
+
+    for i in range(0,nsteps):
         
-        # El sistema evoluciona 1000 pasos
-        a.evolution(100)
+        # Rutina de evolucion del sistema 
+        a.evolution()
 
-        energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
-        temp = med.temperature(a)
+        if i % nprint == 0:
 
-        # Imprime los valores 
-        print i*1000, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
+             energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
+             temp = med.temperature(a)
+
+             # Imprime los valores 
+             print i, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
 
 
 if __name__ == "__main__":

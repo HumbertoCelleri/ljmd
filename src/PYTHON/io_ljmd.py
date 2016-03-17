@@ -1,4 +1,4 @@
-""" io.py contiene todas los metodos de entrada salida 
+""" io.py contiene todas los metodos de entrada salida
 """
 
 import numpy as np
@@ -15,8 +15,8 @@ class Read_inputs(Io_ljmd):
         def __init__(self,inpfile,path):
             self.inpfile = inpfile
             super(Read_inputs, self).__init__(path)
-        
-        def read(self):
+
+        def read(self): # AGREGAN POR DEFAULT y sacamos readline-> ASIGNAMOS
             """Este metodo lee los datos de los dos archivos de entrada y los
             devuelve como diccionario."""
             
@@ -47,27 +47,27 @@ class Read_inputs(Io_ljmd):
             data=np.loadtxt(self.path+input_dict['restfile'])
             input_dict['pos']=np.reshape(data[:input_dict['natoms'],:],[input_dict['natoms']*3],'F')
             input_dict['vel']=np.reshape(data[input_dict['natoms']:,:],[input_dict['natoms']*3],'F')
-            
+
             del data
-            
+
             return input_dict
 
 
 
 class Print_outputs(Io_ljmd):
     """ Este clase imprime (x,y,z) en xyzfile y (paso,temp, Ec, Ep,Et) en datfile
-    
+
     Parameters
     ----------
         xyzfile :: (x,y,z)
         datfile :: (paso,temp, Ec, Ep,Et)
-    
+
     Petodos
     -------
         printXYZ
         printDAT
     """
-    
+
     def __init__(self,xyzfile, datfile,path):
         self.xyzfile = xyzfile
         self.datfile = datfile
@@ -79,11 +79,11 @@ class Print_outputs(Io_ljmd):
         oDATfile.write('Archivo con (paso,temp, Ec, Ep,Et)')
         oXYZfile.close()
         oDATfile.close()
-        
-        
+
+
     def printDAT(self,nfi,sys):
         """ metodo que imprime DAT
-        
+
         Parameters
         ----------
             nfi :: paso de calculo
@@ -92,11 +92,11 @@ class Print_outputs(Io_ljmd):
         oDATfile = open(self.path+self.datfile+'.dat','a')
         oDATfile.write("\n%i\t%.7f\t%.7f\t%.7f\t%.7f\n" % (nfi, sys.temp, sys.ekin, sys.epot, sys.ekin+sys.epot))
         oDATfile.close()
-        
-        
+
+
     def printXYZ(self,nfi,sys):
         """ metodo que imprime XYZ en xyzfile
-        
+
         Parameters
         ----------
             nfi :: paso de calculo
@@ -106,5 +106,5 @@ class Print_outputs(Io_ljmd):
         oXYZfile.write("%i\n nfi = %i\n" % (sys.natoms, nfi))
         for runner in range(0,sys.natoms):
             oXYZfile.write("Ar\t%.7f\t%.7f\t%.7f\n" % (sys.pos[runner], sys.pos[runner+sys.natoms], sys.pos[runner+2*sys.natoms]))
-        
+
         oXYZfile.close()

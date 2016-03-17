@@ -21,12 +21,12 @@ def read_inputs ( inpfile , path ) :
     dict['D_e'] = dict['epsilon']
     dict['a'] = 6./dict['sigma']
     dict['r_e'] = dict['sigma']
-    dict['method'] = 'lj'
+    dict['method'] = 1
     ifile.close()
-    
+
     data=np.loadtxt(path+'/examples/'+dict['restfile'])
     dict['pos']=np.reshape(data[:dict['natoms'],:],[dict['natoms']*3],'F')
     dict['vel']=np.reshape(data[dict['natoms']:,:],[dict['natoms']*3],'F')
     del data
-    
+
     return dict

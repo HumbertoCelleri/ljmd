@@ -5,18 +5,25 @@ import mdsys
 import medidor
 import graficador
 
+
+N = 200
+mass = 1.00
+epsilon = 2.00
+#DEFINIMOS TODAS
+
 def main():
 
-    """ 
+    """
     Main de prueba: el sistema toma la data del archivo argon108
-    y hace evolucionar. Cada 1000 pasos mide las energias, y la 
+    y hace evolucionar. Cada 1000 pasos mide las energias, y la
     temperatura
     """
-    
+    #A = mdsys(natoms = N, mass, )
+
     # Lee el archivo de entrada y guarda en diccionario
     path = os.getcwd() # get path of ljmd.py
     a = mdsys.mdsys_t()
-    
+
     # Inicializamos io
 #    InputOutput = io_ljmd.Io_ljmd('..') 
     read_inputs = io_ljmd.Read_inputs('argon_108','../../examples/')
@@ -26,7 +33,7 @@ def main():
     nsteps = parameters['nsteps']
     nprint = parameters['nprint']
 
-    # Defino un objeto medidor 
+    # Defino un objeto medidor
     med = medidor.Medidor()
 
     # Inicializo los parametros del sistema
@@ -34,8 +41,8 @@ def main():
 
     Graf = graficador.Graficador(a,med)
     for i in range(0,nsteps):
-        
-        # Rutina de evolucion del sistema 
+
+        # Rutina de evolucion del sistema
         a.evolution()
 
         if i % nprint == 0:
@@ -43,7 +50,7 @@ def main():
              energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
              temp = med.temperature(a)
 
-             # Imprime los valores 
+             # Imprime los valores
              print i, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
              #Graf.distribucion_posiciones_3D()
              #a.nfi = i
@@ -58,8 +65,8 @@ def main():
 
     # Grafica histograma velocidades
     Graf.histograma_velocidades()
-    
-    
+
+
     ## Imprimimos salidas
     #output = io_ljmd.Print_outputs('argon_108','argon_108','')
     #output.printDAT(100,a)

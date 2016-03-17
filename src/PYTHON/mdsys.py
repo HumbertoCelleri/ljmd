@@ -44,20 +44,20 @@ class mdsys_t(C.Structure):
                  ('a',C.c_double),
                  ('r_e',C.c_double),
                  ('method',C.c_int) ]
-                 
+
 
     def __init__(self):
 
         CLIB.set_nthreads(C.byref(self))
         self.clist = None
         self.plist = None
-       
+
 
 
     def evolution(self, pasos = 1):
 
         """ Metodo evolucion: el sistema evoluciona mediante el algoritmo de verlet
-        la cantidad de pasos especificada. cellfreq se refiere a los pasos en los que 
+        la cantidad de pasos especificada. cellfreq se refiere a los pasos en los que
         actualiza la lista de vecinos (definido en el codigo C) """
 
         cellfreq = 4
@@ -78,7 +78,7 @@ class mdsys_t(C.Structure):
         term.set_temp(self)
 
 
-             
+
     def input(self, dict):
         """ Agregar funcion input de datos """
 

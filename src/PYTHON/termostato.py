@@ -3,12 +3,22 @@ import numpy as np
 
 class Andersen_termostat(object):
 
+    """ Esta clase define un termostato de Andersen:
+    temp: temperatura del termostato
+    nu: parametro proporcional a la intensidad del termostato
+    """
+
     def __init__(self, temp, nu):
         self.temp = temp
 	self.nu = nu
 	
 
     def set_temp(self, mdsys_t):
+
+        """
+        Este metodo hace interactuar el termostato
+        con el sistema de particulas mdsys_t.
+        """
 
         natoms = mdsys_t.natoms
 

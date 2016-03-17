@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import ctypes as C
-CLIB = C.CDLL('./libc.so')
+CLIB = C.CDLL('./libc_MP.so')
 
 
 class cell_t(C.Structure):

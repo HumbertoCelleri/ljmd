@@ -19,7 +19,7 @@ def main():
     
     # Inicializamos io
 #    InputOutput = io_ljmd.Io_ljmd('..') 
-    read_inputs = io_ljmd.Read_inputs('argon_108','')
+    read_inputs = io_ljmd.Read_inputs('argon_108','../../examples/')
     parameters = read_inputs.read()
     
     # El programa corre nsteps pasos e imprimi cada nprint 

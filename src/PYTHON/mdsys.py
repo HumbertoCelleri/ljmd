@@ -85,18 +85,18 @@ class mdsys_t(C.Structure):
         self.natoms = C.c_int(dict['natoms'])
         self.dt = C.c_double(dict['dt'])
         self.mass = C.c_double(dict['mass'])
-        self.epsilon = C.c_double(dict['epsilon'])
-        self.sigma = C.c_double(dict['sigma'])
         self.box = C.c_double(dict['box'])
         self.rcut = C.c_double(dict['rcut'])
         self.pos = (C.c_double*(3*self.natoms))(*dict['pos'])
         self.vel = (C.c_double*(3*self.natoms))(*dict['vel'])
         self.frc = (C.c_double*(3*self.nthreads*self.natoms))()
         self.nsteps = C.c_int(dict['nsteps'])
-        self.D_e = C.c_double(dict['D_e'])
-        self.a = C.c_double(dict['a'])
-        self.r_e = C.c_double(dict['r_e'])
-        if dict['method']=='lj': 
+        if dict['method'] == 0: 
             self.method = C.c_int(0)
-        else :
+            self.epsilon = C.c_double(dict['epsilon'])
+            self.sigma = C.c_double(dict['sigma'])
+        elif dict['method'] == 1 :
             self.method = C.c_int(1)
+            self.D_e = C.c_double(dict['D_e'])
+            self.a = C.c_double(dict['a'])
+            self.r_e = C.c_double(dict['r_e'])

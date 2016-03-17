@@ -16,7 +16,7 @@ Options:\n\n\
 all: serial parallel
 
 serial:
-	$(CC) -c -fPIC ljmd.c 
+	$(CC) -c -g -O0 -fPIC ljmd.c 
 	$(CC) -shared ljmd.o -o libc.so
 
 parallel:

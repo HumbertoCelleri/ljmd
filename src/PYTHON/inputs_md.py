@@ -1,9 +1,10 @@
-import numpy as np
-"""Esta funcion lee los datos de los dos archivos de entrada y los
-devuelve como diccionario."""
+#import numpy as np
+#"""Esta funcion lee los datos de los dos archivos de entrada y los
+#devuelve como diccionario."""
 
 natoms = 108  # Number of atoms
 mass = 39.948 # Mass in AMU
+potential = 'lj'  # 'lj' for Lennard-Jones potential or 'morse' for Morse
 epsilon = 0.2379 # Epsilon in kcal/mol
 sigma = 3.405 # Sigma in angstrom
 rcut = 8.5 # Cut-off radius in angstrom
@@ -16,5 +17,5 @@ dt = 5.0 # MD time step (in fs)
 nprint = 100  # Output print frequency
 
 D_e = epsilon
-a = 0.09/sigma
+a = 6./sigma
 r_e = sigma

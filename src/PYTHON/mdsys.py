@@ -43,7 +43,7 @@ class mdsys_t(C.Structure):
                  ('D_e',C.c_double),
                  ('a',C.c_double),
                  ('r_e',C.c_double),
-                 ('method',C.c_int) ]
+                 ('potential',C.c_int) ]
 
 
     def __init__(self):
@@ -91,12 +91,12 @@ class mdsys_t(C.Structure):
         self.vel = (C.c_double*(3*self.natoms))(*dict['vel'])
         self.frc = (C.c_double*(3*self.nthreads*self.natoms))()
         self.nsteps = C.c_int(dict['nsteps'])
-        if dict['method'] == 0: 
-            self.method = C.c_int(0)
+        if dict['potential'] == 0: 
+            self.potential = C.c_int(0)
             self.epsilon = C.c_double(dict['epsilon'])
             self.sigma = C.c_double(dict['sigma'])
-        elif dict['method'] == 1 :
-            self.method = C.c_int(1)
+        elif dict['potential'] == 1 :
+            self.potential = C.c_int(1)
             self.D_e = C.c_double(dict['D_e'])
             self.a = C.c_double(dict['a'])
             self.r_e = C.c_double(dict['r_e'])

@@ -48,7 +48,7 @@ struct _mdsys {
     int ngrid, ncell, npair, nidx;
     double delta;
     double D_e,a,r_e;
-    int method;
+    int potential;
 };
 typedef struct _mdsys mdsys_t;
 
@@ -589,10 +589,10 @@ void force_lj(mdsys_t *sys)
 void force(mdsys_t *sys)
 {
   /* compute forces and potential energy */
-  if (sys->method == 0)
+  if (sys->potential == 0)
       force_lj(sys);
-  else force_morse(sys);
-
+  else if (sys->potential == 1)
+      force_morse(sys);
 }
 
 /* velocity verlet */

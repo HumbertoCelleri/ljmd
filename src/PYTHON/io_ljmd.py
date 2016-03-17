@@ -35,6 +35,10 @@ class Read_inputs(Io_ljmd):
             input_dict['dt'] = float(ifile.readline().split(' ')[0]) # MD time step (in fs)
             input_dict['nprint'] = int(ifile.readline().split(' ')[0]) # Output print frequency
             ifile.close()
+            input_dict['D_e'] = input_dict['epsilon']
+            input_dict['a'] = 0.09/input_dict['sigma']
+            input_dict['r_e'] = input_dict['sigma']
+            input_dict['method'] = 0
 
             data=np.loadtxt(self.path+input_dict['restfile'])
             input_dict['pos']=np.reshape(data[:input_dict['natoms'],:],[input_dict['natoms']*3],'F')

@@ -18,3 +18,4 @@ nprint = 100  # Output print frequency
 D_e = epsilon
 a = 0.09/sigma
 r_e = sigma
+method = 0 

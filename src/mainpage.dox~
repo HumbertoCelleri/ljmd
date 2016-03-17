@@ -1,0 +1,26 @@
+/*!
+\mainpage WTPC2016: Molecullar dynamics project
+
+\author Celleri Humberto, Sebastian Pinto, Rodrigo Lugones, Axel H., et. at
+
+\section intro_sec Introduction
+
+This project consist on taking a C code of molecullar dynamics and:
+- Use necessary function in C code (Dynamic lybrary + Wrapper(Ctypes)) while scripting in Python language.
+- Incorporate a different interaction potential (lennard-jones, morze)
+- Choose wheather the particle system will respond to uniform energy or inside a termostate (uniform temperature).
+- Choose weather to run with OpenMP ( max threads parallelization).
+
+\section trac_sec Summit Project
+A Trac website has been created to trac recent and past developments: http://github.com/HumbertoCelleri/ljmd
+
+\section build_sec Building 
+The dynamic library is built dynamically:
+- See Makefile in src
+<br />
+
+The code is compared to 3 know result system of particles.
+
+\section meeting_sec Software Meetings
+The code was developed during second week of WTPC2016 (Buenos Aires Argentina)
+*/

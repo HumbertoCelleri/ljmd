@@ -25,4 +25,4 @@ parallel:
 
 
 clean:
-	rm -rfv ljmd.o libc.so libc_MP.so
+	rm -rfv ljmd.o libc.so libc_MP.so *.pyc

@@ -1,21 +1,23 @@
-#import numpy as np
-#"""Esta funcion lee los datos de los dos archivos de entrada y los
-#devuelve como diccionario."""
+"""Archivo con parametros de entrada."""
 
+particles = 'argon'  # Name of particles
 natoms = 108  # Number of atoms
 mass = 39.948 # Mass in AMU
-potential = 'lj'  # 'lj' for Lennard-Jones potential or 'morse' for Morse
-epsilon = 0.2379 # Epsilon in kcal/mol
-sigma = 3.405 # Sigma in angstrom
+potential = 'morse'  # 'lj' for Lennard-Jones potential or 'morse' for Morse
+if potential == 'lj':
+    epsilon = 0.2379 # Epsilon in kcal/mol
+    sigma = 3.405 # Sigma in angstrom
+elif potential == 'morse':
+    D_e = 0.2379 # Epsilon in kcal/mol
+    r_e = 3.405 # Sigma in angstrom
+    a = 10./r_e
+
 rcut = 8.5 # Cut-off radius in angstrom
 box = 17.1580 # Box length in angstrom
-restfile = 'argon_108.rest' # Filename for restart
-trajfile = 'argon_108.xyz' # Filename for trajectories
-ergfile = 'argon_108.dat' # Filename for energies
 nsteps = 10000  # Number of MD steps
 dt = 5.0 # MD time step (in fs)
 nprint = 100  # Output print frequency
 
-D_e = epsilon
-a = 6./sigma
-r_e = sigma
+restfile = particles+'_'+str(108)+'.rest' # Filename for restart
+trajfile = particles+'_'+str(108)+'.xyz' # Filename for trajectories
+ergfile = particles+'_'+str(108)+'.dat' # Filename for energies

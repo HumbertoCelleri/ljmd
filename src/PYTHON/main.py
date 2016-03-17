@@ -5,8 +5,8 @@ import os
 import io_ljmd
 import mdsys
 import medidor
+import termostato
 import graficador
-
 
 def main():
 
@@ -27,7 +27,7 @@ def main():
     
     # El programa corre nsteps pasos e imprimi cada nprint 
     nsteps = parameters['nsteps']
-    nprint = parameters['nprint']
+    nprint = parameters['nprint'] * 5
 
     # Defino un objeto medidor
     med = medidor.Medidor()
@@ -35,33 +35,34 @@ def main():
     # Inicializo los parametros del sistema
     a.input(parameters)
 
-    Graf = graficador.Graficador(a,med)
-    for i in range(0,nsteps):
+    # Defino un objeto graficador
+    graf = graficador.Graficador()
 
-        # Rutina de evolucion del sistema
-        a.evolution()
 
-        if i % nprint == 0:
+    # Empiezo el bucle infinito hasta que la respuesta no sea 'y'
+    resp = 'y'
+    i_aux = 0
+    while resp == 'y':
 
-             energia_total = med.kinetic_energy(a) + med.potencial_energy(a)
-             temp = med.temperature(a)
+        for i in range(i_aux, i_aux + nsteps):
 
-             # Imprime los valores
-             print i, temp, med.kinetic_energy(a), med.potencial_energy(a), energia_total
-             #Graf.distribucion_posiciones_3D()
-             #a.nfi = i
+            # Rutina de evolucion del sistema
+            a.evolution_Tconstante(temp = 0.10)
+#            a.evolution()
 
-    # Inicializamos la clase
-    Graf = graficador.Graficador(a,med)
-    # Grafica scatter
-    #    Graf.distribucion_posiciones_3D()
+            if i % nprint == 0:
 
-    # Grafica   quiver
-    #    Graf.distribucion_velocidades_3D()
+                ekin = med.kinetic_energy(a)
+                epot = med.potencial_energy(a)
+           
+                energia_total = ekin + epot
 
-    # Grafica histograma velocidades
-    Graf.histograma_velocidades()
+                temp = med.temperature(a)
 
+                graf.evolucion_graf(i, nsteps, temp, ekin, epot, energia_total)
+        # Pregunta si seguir o no
+        resp = raw_input('Seguir? y/n: ')
+        i_aux += nsteps
 
     ## Imprimimos salidas
     #output = io_ljmd.Print_outputs('argon_108','argon_108','')

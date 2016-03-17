@@ -32,9 +32,8 @@ class Graficador(object):
         super(Graficador, self).__init__()
         self.sys = sys
     """
-    def __init__(self,sys,med):
-        self.sys = sys
-        self.med = med
+    def __init__(self):
+        pass
 
     def histograma_velocidades(self):
         """function that plots histograma de velocidades"""
@@ -133,16 +132,37 @@ class Graficador(object):
         plt.savefig('Grafico_3D.png')
         
         
-    def evolucion_energia(self):
-        """ funcion que grafica la evolucion de la energia del sistema en funcion del tiempo """
-        evol_energia_kin = []
-        evol_energia_pot = []
-        evol_nfi = []
-        
-        evol_energia_kin.append(self.sys.ekin)
-        evol_energia_pot.append(self.sys.epot)
-        evol_nfi.append(self.sys.nfi)
-        
-        def update(self):
-            pass
-        
+    def evolucion_graf(self, i, nsteps, temp = 0, ekin = 0, epot = 0, etot = 0):
+        """ 
+        Funcion que grafica la evolucion de la temperatura y las energias del sistema en funcion del tiempo
+        """
+
+        plt.ion()
+
+        plt.xlim([0, nsteps + nsteps * (i / nsteps)])
+
+        plt.show()
+
+        legend = []
+
+        if temp != 0:
+      	    plt.scatter(i, temp, color = 'g')          
+            legend.append('Temp')
+
+        if ekin != 0:       
+            plt.scatter(i, ekin, color = 'r')         
+            legend.append('Ekin')
+            
+        if epot != 0:
+            plt.scatter(i, epot, color = 'b')          
+            legend.append('Epot')
+
+        if etot != 0:
+            plt.scatter(i, etot, color = 'k')
+            legend.append('Etot')
+            
+ 
+        plt.legend(legend)
+        plt.xlabel('Time')
+        plt.draw()
+           

@@ -52,37 +52,8 @@ struct _mdsys {
 };
 typedef struct _mdsys mdsys_t;
 
-/* helper function: read a line and then return
-   the first string with whitespace stripped off */
-static int get_a_line(FILE *fp, char *buf)
-{
-    char tmp[BLEN], *ptr;
-
-    /* read a line and cut of comments and blanks */
-    if (fgets(tmp,BLEN,fp)) {
-        int i;
-
-        ptr=strchr(tmp,'#');
-        if (ptr) *ptr= '\0';
-        i=strlen(tmp); --i;
-        while(isspace(tmp[i])) {
-            tmp[i]='\0';
-            --i;
-        }
-        ptr=tmp;
-        while(isspace(*ptr)) {++ptr;}
-        i=strlen(ptr);
-        strcpy(buf,tmp);
-        return 0;
-    } else {
-        perror("problem reading input");
-        return -1;
-    }
-    return 0;
-}
 
 /* helper function: zero out an array */
-//__attribute__((always_inline))
 static void azzero(double *d, const int n)
 {
     int i;
@@ -92,7 +63,6 @@ static void azzero(double *d, const int n)
 }
 
 /* helper function: apply minimum image convention */
-//__attribute__((always_inline,pure))
 static double pbc(double x, const double boxby2, const double box)
 {
     while (x >  boxby2) x -= box;
@@ -212,25 +182,6 @@ void updcells(mdsys_t *sys)
     return;
 }
 
-
-/* release cell list storage */
-static void free_cell_list(mdsys_t *sys)
-{
-    int i;
-
-    if (sys->clist == NULL)
-        return;
-
-    for (i=0; i < sys->ncell; ++i) {
-        free(sys->clist[i].idxlist);
-    }
-
-    free(sys->clist);
-    sys->clist = NULL;
-    sys->ncell = 0;
-}
-
-
 /* compute kinetic energy */
 void ekin(mdsys_t *sys)
 {
@@ -244,7 +195,7 @@ void ekin(mdsys_t *sys)
     sys->temp  = 2.0*sys->ekin/(3.0*sys->natoms-3.0)/kboltz;
 }
 
-/* compute forces */
+/* compute forces with a Morse potencial */
 void force_morse(mdsys_t *sys)
 {
     double epot;
@@ -416,7 +367,7 @@ void force_morse(mdsys_t *sys)
     sys->epot = epot;
 }
 
-/* compute forces */
+/* compute forces with a Lennard - Jones potencial */
 
 void force_lj(mdsys_t *sys)
 {
@@ -586,9 +537,13 @@ void force_lj(mdsys_t *sys)
     sys->epot = epot;
 }
 
+/* helper function: define the 
+function force based on the potential
+chosen */
+
 void force(mdsys_t *sys)
 {
-  /* compute forces and potential energy */
+
   if (sys->potential == 0)
       force_lj(sys);
   else if (sys->potential == 1)
@@ -617,21 +572,8 @@ void velverlet(mdsys_t *sys)
     }
 }
 
-/* append data to output. */
-static void output(mdsys_t *sys, FILE *erg, FILE *traj)
-{
-    int i,natoms;
-    natoms=sys->natoms;
-
-    printf("% 8d % 20.8f % 20.8f % 20.8f % 20.8f\n", sys->nfi, sys->temp, sys->ekin, sys->epot, sys->ekin+sys->epot);
-    fprintf(erg,"% 8d % 20.8f % 20.8f % 20.8f % 20.8f\n", sys->nfi, sys->temp, sys->ekin, sys->epot, sys->ekin+sys->epot);
-    fprintf(traj,"%d\n nfi=%d etot=%20.8f\n", sys->natoms, sys->nfi, sys->ekin+sys->epot);
-    for (i=0; i<natoms; ++i) {
-        fprintf(traj, "Ar  %20.8f %20.8f %20.8f\n", sys->pos[i], sys->pos[natoms+i], sys->pos[2*natoms+i]);
-    }
-}
-
-
+/* Set the number of threads used 
+to run the program */
 void set_nthreads(mdsys_t *sys)
 {
 #if defined(_OPENMP)

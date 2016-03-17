@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import ctypes as C
-CLIB = C.CDLL('./libc_MP.so')
-
 
 class Medidor(object):
     """
@@ -11,15 +9,19 @@ class Medidor(object):
     observables de un sistema de particulas
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, library = 'serial'):
+
+        if library == 'MP':
+            self.CLIB = C.CDLL('./libc_MP.so')
+        else:
+            self.CLIB = C.CDLL('./libc.so')
 
     def kinetic_energy(self, sys):
         """
         Calula la energia cinetica del sistema de particulas sys
         """
  
-        CLIB.ekin(C.byref(sys))
+        self.CLIB.ekin(C.byref(sys))
 
         return sys.ekin
 
@@ -29,8 +31,8 @@ class Medidor(object):
         Calcula la energia potencial del sistema de particulas sys
         """
 
-        CLIB.updcells(C.byref(sys))
-        CLIB.force(C.byref(sys))
+        self.CLIB.updcells(C.byref(sys))
+        self.CLIB.force(C.byref(sys))
 
         return sys.epot
 
@@ -40,15 +42,6 @@ class Medidor(object):
         Calcula la temperatura del sistema
         """
 
-        CLIB.ekin(C.byref(sys))
+        self.CLIB.ekin(C.byref(sys))
         return sys.temp
 
-
-    def get_pos(self, sys):
-
-        return sys.pos
-
-
-    def get_vel(self, sys):
-
-        return sys.vel

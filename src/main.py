@@ -8,6 +8,12 @@ import medidor
 import termostato
 import graficador
 
+
+# Forma de compilar las funciones C
+# Con 'MP' usa la libreria paralela
+
+library = 'MP'
+
 def main():
 
     """
@@ -18,7 +24,7 @@ def main():
 
     # Lee el archivo de entrada y guarda en diccionario
     path = os.getcwd() # get path of ljmd.py
-    a = mdsys.mdsys_t()
+    a = mdsys.mdsys_t(library)
 
     # Inicializamos io
     read_inputs = io_ljmd.Read_inputs('argon_108','../examples/')
@@ -29,7 +35,7 @@ def main():
     nprint = parameters['nprint'] * 5
 
     # Defino un objeto medidor
-    med = medidor.Medidor()
+    med = medidor.Medidor(library)
 
     # Inicializo los parametros del sistema
     a.input(parameters)

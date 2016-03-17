@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import ctypes as C
-CLIB = C.CDLL('./libc_MP.so')
-
+ 
 
 class cell_t(C.Structure):
     """ Declaro la estructura cell_t definida en el codigo C """
@@ -46,9 +45,14 @@ class mdsys_t(C.Structure):
                  ('potential',C.c_int) ]
 
 
-    def __init__(self):
+    def __init__(self, library = 'serial'):
 
-        CLIB.set_nthreads(C.byref(self))
+        if library == 'MP':
+            self.CLIB = C.CDLL('./libc_MP.so')
+        else:
+            self.CLIB = C.CDLL('./libc.so')
+
+        self.CLIB.set_nthreads(C.byref(self))
         self.clist = None
         self.plist = None
 
@@ -63,10 +67,10 @@ class mdsys_t(C.Structure):
         cellfreq = 4
         for i in range(0, pasos):
 
-             CLIB.velverlet(C.byref(self))
+             self.CLIB.velverlet(C.byref(self))
 
              if i % cellfreq == 0:
-                  CLIB.updcells(C.byref(self))
+                  self.CLIB.updcells(C.byref(self))
 
     def evolution_Tconstante(self, pasos = 1, temp = 40.00, nu = 0.0001):
 

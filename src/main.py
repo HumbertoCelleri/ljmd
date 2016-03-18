@@ -10,7 +10,7 @@ import graficador as graficador
 
 
 # Con 'parallel' usa la libreria paralela y con 'serial', la serial
-library = 'parallel'
+libreria = 'parallel'
 
 # Caso a analizar: 'argon_108', 'argon_2916', 'argon_78732'
 #   'argon_108_morse', 'argon_2916_morse', 'argon_78732_morse'
@@ -30,7 +30,7 @@ def main():
     path_data='./data/'
     copyfile(path_data+caso+'.inp','src/mdinput.py')
     import io_ljmd as io_ljmd
-    mdsystem = mdsys.mdsys_t(library)
+    mdsystem = mdsys.mdsys_t(libreria)
 
     # Inicializamos io
     read_inputs = io_ljmd.Read_inputs(caso,path_data)
@@ -41,7 +41,7 @@ def main():
     nprint = parameters['nprint'] * 5
 
     # Defino un objeto medidor
-    med = medidor.Medidor(library)
+    med = medidor.Medidor(libreria)
 
     # Defino un objeto graficador
     graf = graficador.Graficador(mdsystem,caso,path_data)

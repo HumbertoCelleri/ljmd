@@ -11,9 +11,9 @@ class Medidor(object):
 
     def __init__(self, library = 'serial'):
 
-        if library == 'MP':
+        if library == 'parallel':
             self.CLIB = C.CDLL('./libc_MP.so')
-        else:
+        elif library == 'serial':
             self.CLIB = C.CDLL('./libc.so')
 
     def kinetic_energy(self, sys):

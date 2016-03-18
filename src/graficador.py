@@ -32,10 +32,12 @@ class Graficador(object):
         super(Graficador, self).__init__()
         self.sys = sys
     """
-    def __init__(self):
-        pass
+    def __init__(self,sys,caso,path):
+        self.sys=sys
+        self.caso=caso
+        self.path=path
 
-    def histograma_velocidades(self):
+    def histograma_velocidades(self,med):
         """function that plots histograma de velocidades"""
         lista_vel = []
         
@@ -43,7 +45,7 @@ class Graficador(object):
             lista_vel.append([self.sys.vel[i],self.sys.vel[i+self.sys.natoms], \
             self.sys.vel[i+2*self.sys.natoms]] )
         
-        velocidades = self.med.get_vel(self.sys)
+        velocidades = med.get_vel(self.sys)
         """ ploteo histograma"""
         histfig = plt.figure()
         plt.hist(velocidades[0:self.sys.natoms],bins=20)
@@ -88,10 +90,10 @@ class Graficador(object):
         plt.title('Grafico quiver de particulas')
         """
         plt.show()
-        plt.save('Grafico_3D_quiver')
+        plt.save(self.path+self.caso+'_Grafico_3D_quiver')
 
 
-    def distribucion_posiciones_3D(self):
+    def distribucion_posiciones_3D(self,med):
         """
         function that plots the 3D graf of posicion particules
 
@@ -123,13 +125,13 @@ class Graficador(object):
         ax = Axes3D(fig)
         """ax.scatter(lista_pos[0:self.sys.natoms], lista_pos[self.sys.natoms+1:2*self.sys.natoms], lista_pos[2*self.sys.natoms+1:3*self.sys.natoms])"""
         # ACA TENGO QUE LLAMAR A MEDIDOR(sys)
-        positions = self.med.get_pos(self.sys)
+        positions = med.get_pos(self.sys)
         ax.scatter(positions[0:self.sys.natoms-1], positions[self.sys.natoms:2*self.sys.natoms-1],\
          positions[2*self.sys.natoms:3*self.sys.natoms-1])
         #ax.scatter(self.sys.pos[0:self.sys.natoms-1], self.sys.pos[self.sys.natoms:2*self.sys.natoms-1], self.sys.pos[2*self.sys.natoms:3*self.sys.natoms-1])
         plt.title('Grafico de posiciones de particulas')
         plt.show()
-        plt.savefig('Grafico_3D.png')
+        plt.savefig(self.path+self.caso+'_Grafico_3D.png')
         
         
     def evolucion_graf(self, i, nsteps, temp = 0, ekin = 0, epot = 0, etot = 0):

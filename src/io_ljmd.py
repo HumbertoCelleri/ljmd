@@ -44,7 +44,6 @@ class Read_inputs(Io_ljmd):
         
         data=np.loadtxt(self.path+input_dict['restfile'])
         input_dict['pos']=np.reshape(data[:mdi.natoms,:],[mdi.natoms*3],'F')
-        #input_dict['pos']=np.array([random.uniform(-mdi.box,mdi.box) for _ in range(mdi.natoms*3)])
         input_dict['vel']=np.reshape(data[mdi.natoms:,:],[mdi.natoms*3],'F')
 
         del data

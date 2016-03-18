@@ -1,4 +1,8 @@
 """ io.py contiene todas los metodos de entrada salida
+    
+    Parameters:
+    ----------
+                path :: The Input/Output file path
 """
 
 import numpy as np
@@ -6,13 +10,23 @@ import random
 import mdinput as mdi
 
 class Io_ljmd(object):
-    """ La clase Io contiene todos los metodos de ingreso y salida"""
+    """ La clase Io contiene todos los metodos de ingreso y salida
+    
+    Parameters:
+    ----------
+                path :: The Input/Output file path
+    """
     def __init__(self,path):
         self.path=path
 
 
 class Read_inputs(Io_ljmd):
-    """ Clase que contiene los metodos de lectura"""
+    """ Clase que contiene los metodos de lectura
+    
+    Comentario
+    ----------
+              Clase madre:: Io_ljmd
+    """
     def __init__(self,inpfile,path):
         self.inpfile = inpfile
         super(Read_inputs, self).__init__(path)
@@ -60,10 +74,14 @@ class Print_outputs(Io_ljmd):
         xyzfile :: (x,y,z)
         datfile :: (paso,temp, Ec, Ep,Et)
 
-    Petodos
+    Metodos
     -------
         printXYZ
         printDAT
+    
+    Comentario
+    ----------
+              Clase madre:: Io_ljmd
     """
 
     def __init__(self,xyzfile, datfile,path):

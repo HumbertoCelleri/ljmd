@@ -1,17 +1,6 @@
-This package contains simplified MD code with multi-threading
-parallelization for simulating atoms with a Lennard-Jones potential.
+Primero compilar tipeando ´make build´. Eso genera las librerías
+adecuadas y crea el link ejecutable 'molecular\_dynamics.py'.
 
-The bundled makefiles are set up to compile the executable once
-with OpenMP disabled and once with OpenMP enabled with each build
-placing the various object files in separate directories.
-
-The examples directory contains 3 sets of example input decks
-and the reference directory the corresponding outputs.
-
-Type: make
-to compile everything and: make clean
-to remove all compiled objects
-
-Original code from Axel Kohlmeyer: https://github.com/akohlmey/ljmd-c
-
-Para el [Workshop en Técnicas de Programación Científica](wp.df.uba.ar/wtpc)
+Para correr las simulaciones, setear los parámetros 'libreria', 'caso'
+y 'termostato' en el archivo 'molecular\_dynamics.py'. Para correr la
+simulación, tipear ´./molecular\_dynamics.py´

@@ -10,6 +10,6 @@ build:
 	ln -s src/main.py; mv main.py molecular_dynamics.py
 
 clean:
-	cd src; $(MAKE) clean;\
+	cd src; $(MAKE) clean; cd ..;\
 	rm molecular_dynamics.py;\
 	cd data; rm *.xyz *.dat *.png; cd ..

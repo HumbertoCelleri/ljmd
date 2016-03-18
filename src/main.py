@@ -12,11 +12,15 @@ import graficador as graficador
 # Con 'parallel' usa la libreria paralela y con 'serial', la serial
 libreria = 'parallel'
 
-# Caso a analizar: 'argon_108', 'argon_2916', 'argon_78732'
+# Casos a analizar: 'argon_108', 'argon_2916', 'argon_78732'
 #   'argon_108_morse', 'argon_2916_morse', 'argon_78732_morse'
 caso = 'argon_108'
 
+# El termostato puede estar (True) o no (False)
 termostato=False
+
+
+
 
 def main():
 
@@ -72,10 +76,11 @@ def main():
                 output.printDAT(i,mdsystem)
                 output.printXYZ(i,mdsystem)
         # Pregunta si seguir o no
-        resp = raw_input('Seguir? y/n: ')
+        resp = raw_input('Continuar? y/n: ')
         i_aux += nsteps
     graf.histograma_velocidades(med)
     graf.distribucion_posiciones_3D(med)
+    raw_input('Terminado. Presione [enter] para continuar.')
 
 if __name__ == "__main__":
     main()

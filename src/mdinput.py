@@ -3,7 +3,7 @@
 particles = 'argon'  # Name of particles
 natoms = 108  # Number of atoms
 mass = 39.948 # Mass in AMU
-potential = 'morse'  # 'lj' for Lennard-Jones potential or 'morse' for Morse
+potential = 'lj'  # 'lj' for Lennard-Jones potential or 'morse' for Morse
 if potential == 'lj':
     epsilon = 0.2379 # Epsilon in kcal/mol
     sigma = 3.405 # Sigma in angstrom
@@ -16,7 +16,7 @@ rcut = 8.5 # Cut-off radius in angstrom
 box = 17.1580 # Box length in angstrom
 nsteps = 10000  # Number of MD steps
 dt = 5.0 # MD time step (in fs)
-nprint = 100  # Output print frequency
+nprint = 20  # Output print frequency
 
 restfile = particles+'_'+str(108)+'.rest' # Filename for restart
 trajfile = particles+'_'+str(108)+'.xyz' # Filename for trajectories

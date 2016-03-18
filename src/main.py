@@ -29,8 +29,8 @@ def main():
     # Inicializamos io
     read_inputs = io_ljmd.Read_inputs('argon_108','../examples/')
     parameters = read_inputs.read()
-    
-    # El programa corre nsteps pasos e imprimi cada nprint 
+
+    # El programa corre nsteps pasos e imprimi cada nprint
     nsteps = parameters['nsteps']
     nprint = parameters['nprint'] * 5
 
@@ -43,7 +43,8 @@ def main():
     # Defino un objeto graficador
     graf = graficador.Graficador()
 
-
+    # contador_imagen
+    contador_imagen = 0
     # Empiezo el bucle infinito hasta que la respuesta no sea 'y'
     resp = 'y'
     i_aux = 0
@@ -59,12 +60,15 @@ def main():
 
                 ekin = med.kinetic_energy(a)
                 epot = med.potencial_energy(a)
-           
+
                 energia_total = ekin + epot
 
                 temp = med.temperature(a)
+                contador_imagen +=1
 
-                graf.evolucion_graf(i, nsteps, temp, ekin, epot, energia_total)
+                # Graficamos distribucion posiciones
+                #graf.distribucion_posiciones_3D(med,a,contador_imagen)
+                #graf.evolucion_graf(i, nsteps, temp, ekin, epot, energia_total)
         # Pregunta si seguir o no
         resp = raw_input('Seguir? y/n: ')
         i_aux += nsteps
@@ -73,6 +77,9 @@ def main():
     #output = io_ljmd.Print_outputs('argon_108','argon_108','')
     #output.printDAT(100,a)
     #output.printXYZ(100,a)
+    # Graficamos el histograma de velocidades
+    graf.histograma_velocidades(med,a)
+
 
 if __name__ == "__main__":
     main()

@@ -16,7 +16,7 @@ library = 'parallel'
 #   'argon_108_morse', 'argon_2916_morse', 'argon_78732_morse'
 caso = 'argon_108'
 
-termostato=False
+termostato = True
 
 def main():
 
@@ -76,6 +76,7 @@ def main():
         i_aux += nsteps
     graf.histograma_velocidades(med)
     graf.distribucion_posiciones_3D(med)
+    raw_input('Presione una tecla para salir...')
 
 if __name__ == "__main__":
     main()

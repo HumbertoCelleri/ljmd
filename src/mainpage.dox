@@ -1,7 +1,7 @@
 /*!
 \mainpage WTPC2016: Molecullar dynamics project
 
-\author Celleri Humberto, Sebastian Pinto, Rodrigo Lugones, Axel H., et. at
+\author  Sebastian Pinto, Rodrigo Lugones, Celleri Humberto, Axel H., et. at
 
 \section intro_sec Introduction
 
@@ -16,7 +16,7 @@ A Trac website has been created to trac recent and past developments: http://git
 
 \section build_sec Building 
 The dynamic library is built dynamically:
-- See Makefile in src
+- See Makefile in src folder
 <br />
 
 The code is compared to 3 know result system of particles.

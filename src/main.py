@@ -3,19 +3,20 @@
 import numpy as np
 import os
 from shutil import copyfile
-import mdsys
-import medidor
-import termostato
-import graficador
+import mdsys as mdsys
+import medidor as medidor
+import termostato as termostato
+import graficador as graficador
 
 
-# Forma de compilar las funciones C
-# Con 'parallel' usa la libreria paralela
-# y con 'serial' usa la libreria serial
+# Con 'parallel' usa la libreria paralela y con 'serial', la serial
 library = 'parallel'
 
-# Caso a analizar: 'argon_108', 'argon_2916' o 'argon_78732'
+# Caso a analizar: 'argon_108', 'argon_2916', 'argon_78732'
+#   'argon_108_morse', 'argon_2916_morse', 'argon_78732_morse'
 caso = 'argon_108'
+
+termostato=False
 
 def main():
 
@@ -26,9 +27,9 @@ def main():
     """
 
     # Inicializamos el sistema y elegimos corrida en serie o paralelo
-    path_data='../data/'
-    copyfile(path_data+caso+'.inp','mdinput.py')
-    import io_ljmd
+    path_data='./data/'
+    copyfile(path_data+caso+'.inp','src/mdinput.py')
+    import io_ljmd as io_ljmd
     mdsystem = mdsys.mdsys_t(library)
 
     # Inicializamos io
@@ -56,8 +57,10 @@ def main():
     while resp == 'y':
         for i in range(i_aux, i_aux + nsteps):
             # Rutina de evolucion del sistema
-            mdsystem.evolution_Tconstante(temp = 0.10)
-            #mdsystem.evolution()
+            if termostato :
+                mdsystem.evolution_Tconstante(temp = 0.10)
+            else :
+                mdsystem.evolution()
 
             if i % nprint == 0:
                 ekin = med.kinetic_energy(mdsystem)

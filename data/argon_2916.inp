@@ -3,7 +3,7 @@
 particles = 'argon'    # Name of particles
 natoms = 2916          # Number of atoms
 mass = 39.948          # Mass in AMU
-potential = 'morse'    # 'lj' for Lennard-Jones - 'morse' for Morse
+potential = 'lj'       # 'lj' for Lennard-Jones - 'morse' for Morse
 if potential == 'lj':
     epsilon = 0.2379   # Epsilon in kcal/mol
     sigma = 3.405      # Sigma in angstrom

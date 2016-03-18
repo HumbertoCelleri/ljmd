@@ -6,18 +6,15 @@ Este archivo contiene las herramientas necesarias para graficar los resultados.
 
 Contiene la clase Graficador con los metodos:
         - histograma_velocidades
-        - distribucion_velocidades_3D
+        - distribucion_posiciones_3D
         
-TO DO:
- - Repair inp path
- - 
-
 """
 
 import matplotlib.pyplot as plt
 
 from mpl_toolkits.mplot3d import Axes3D
 
+import numpy as np
 
 class Graficador(object):
     """
@@ -39,16 +36,16 @@ class Graficador(object):
 
     def histograma_velocidades(self,med):
         """function that plots histograma de velocidades"""
-        lista_vel = []
+        lista_vel = med.get_vel(self.sys)
+        velocidades = np.zeros((self.sys.natoms))
         
         for i in range(0,self.sys.natoms):
-            lista_vel.append([self.sys.vel[i],self.sys.vel[i+self.sys.natoms], \
-            self.sys.vel[i+2*self.sys.natoms]] )
+            velocidades[i]=np.sqrt(lista_vel[i]**2+lista_vel[i+self.sys.natoms]**2+lista_vel[i+self.sys.natoms*2]**2)
         
-        velocidades = med.get_vel(self.sys)
+        #velocidades = med.get_vel(self.sys)
         """ ploteo histograma"""
         histfig = plt.figure()
-        plt.hist(velocidades[0:self.sys.natoms],bins=20)
+        plt.hist(velocidades,bins=20)
         plt.title("Histogram of velocity on x")
         plt.xlabel("Velocity")
         plt.ylabel("Count")
@@ -124,7 +121,6 @@ class Graficador(object):
         """ ploteo scatter"""
         fig = plt.figure()
         ax = Axes3D(fig)
-        """ax.scatter(lista_pos[0:self.sys.natoms], lista_pos[self.sys.natoms+1:2*self.sys.natoms], lista_pos[2*self.sys.natoms+1:3*self.sys.natoms])"""
         positions = med.get_pos(self.sys)
         ax.scatter(positions[0:self.sys.natoms-1], positions[self.sys.natoms:2*self.sys.natoms-1],\
          positions[2*self.sys.natoms:3*self.sys.natoms-1])
@@ -166,4 +162,4 @@ class Graficador(object):
         plt.legend(legend)
         plt.xlabel('Time')
         plt.draw()
-           
+        plt.savefig(self.path+self.caso+'_Evolucion_temporal.png')

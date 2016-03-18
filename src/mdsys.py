@@ -48,9 +48,9 @@ class mdsys_t(C.Structure):
     def __init__(self, library = 'serial'):
 
         if library == 'parallel':
-            self.CLIB = C.CDLL('./libc_MP.so')
+            self.CLIB = C.CDLL('./src/libc_MP.so')
         elif library == 'serial':
-            self.CLIB = C.CDLL('./libc.so')
+            self.CLIB = C.CDLL('./src/libc.so')
 
         self.CLIB.set_nthreads(C.byref(self))
         self.clist = None

@@ -50,10 +50,11 @@ class Graficador(object):
         histfig = plt.figure()
         plt.hist(velocidades[0:self.sys.natoms],bins=20)
         plt.title("Histogram of velocity on x")
-        plt.xlabel("Position")
-        plt.ylabel("Velocity")
+        plt.xlabel("Velocity")
+        plt.ylabel("Count")
         #fig = plt.gcf()
         plt.show()
+        plt.savefig(self.path+self.caso+'_Grafico_histograma_velocidades.png')
         """
         gaussian_numbers = np.random.randn(1000)
         plt.hist(gaussian_numbers)
@@ -90,7 +91,7 @@ class Graficador(object):
         plt.title('Grafico quiver de particulas')
         """
         plt.show()
-        plt.save(self.path+self.caso+'_Grafico_3D_quiver')
+        plt.savefig(self.path+self.caso+'_Grafico_3D_quiver.png')
 
 
     def distribucion_posiciones_3D(self,med):
@@ -124,11 +125,9 @@ class Graficador(object):
         fig = plt.figure()
         ax = Axes3D(fig)
         """ax.scatter(lista_pos[0:self.sys.natoms], lista_pos[self.sys.natoms+1:2*self.sys.natoms], lista_pos[2*self.sys.natoms+1:3*self.sys.natoms])"""
-        # ACA TENGO QUE LLAMAR A MEDIDOR(sys)
         positions = med.get_pos(self.sys)
         ax.scatter(positions[0:self.sys.natoms-1], positions[self.sys.natoms:2*self.sys.natoms-1],\
          positions[2*self.sys.natoms:3*self.sys.natoms-1])
-        #ax.scatter(self.sys.pos[0:self.sys.natoms-1], self.sys.pos[self.sys.natoms:2*self.sys.natoms-1], self.sys.pos[2*self.sys.natoms:3*self.sys.natoms-1])
         plt.title('Grafico de posiciones de particulas')
         plt.show()
         plt.savefig(self.path+self.caso+'_Grafico_3D.png')

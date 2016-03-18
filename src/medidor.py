@@ -45,3 +45,17 @@ class Medidor(object):
         self.CLIB.ekin(C.byref(sys))
         return sys.temp
 
+    def get_pos(self, sys):
+        """
+        Devuelve las posiciones del sistema
+        """
+
+        return sys.pos
+
+    def get_vel(self, sys):
+        """
+        Devuelve las velocidades del sistema
+        """
+
+        return sys.vel
+

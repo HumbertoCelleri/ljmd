@@ -16,7 +16,12 @@ A Trac website has been created to trac recent and past developments: http://git
 
 \section build_sec Building 
 The dynamic library is built dynamically:
-- See Makefile in src folder
+ -  To compile dynamic library, in ljmd/ <br />
+    make build
+ - Modify the configuration file
+ -  To run program: <br />
+    ./molecular_dynamics.py
+
 <br />
 
 The code is compared to 3 know result system of particles.

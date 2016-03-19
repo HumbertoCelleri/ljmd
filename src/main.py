@@ -17,7 +17,7 @@ libreria = 'parallel'
 caso = 'argon_108'
 
 # El termostato puede estar (True) o no (False)
-termostato=False
+termostato=True
 
 
 def main():

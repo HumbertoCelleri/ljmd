@@ -160,6 +160,8 @@ class Graficador(object):
             
  
         plt.legend(legend)
-        plt.xlabel('Time')
+        plt.xlabel('Steps')
+        #plt.ylabel('E,T')
+        plt.grid(True)
         plt.draw()
         plt.savefig(self.path+self.caso+'_Evolucion_temporal.png')
